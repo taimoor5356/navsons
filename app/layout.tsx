@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   title: "Navsons",
   description: "Navsons group of companies.",
   icons: {
-    icon: '/icons/logo.svg'
+    icon: '/icons/ns-logo.jpg'
   }
 };
 

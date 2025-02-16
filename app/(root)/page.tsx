@@ -1,10 +1,17 @@
 import HeaderBox from '@/components/HeaderBox'
 import RightSidebar from '@/components/RightSidebar';
 import TotalBalanceBox from '@/components/TotalBalancebox';
+import { getLoggedInUser } from '@/lib/actions/user.actions';
 import React from 'react'
+import { redirect } from "next/navigation";
 
-const Home = () => {
-    const loggedIn = {firstName: 'John', lastName: 'JSM', email: 'john@gmail.com'};
+const Home = async () => {
+    // const loggedIn = {firstName: 'John', lastName: 'JSM', email: 'john@gmail.com'};
+    const loggedIn = await getLoggedInUser();
+    if (!loggedIn || loggedIn instanceof Error) {
+      redirect('/sign-in');
+    }
+    
   return (
     <section className='home'>
       <div className='home-content'>
@@ -12,7 +19,7 @@ const Home = () => {
             <HeaderBox
              type="greeting" 
              title="Welcome" 
-             user={loggedIn?.firstName || 'Guest'} 
+             user={loggedIn?.name || 'Guest'} 
              subtext="Access and manage account and transactions efficiently"
              />
 

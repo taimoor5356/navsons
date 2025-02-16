@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import Footer from "./Footer";
 
 const MobileNav = ({ user }: MobileNavProps) => {
     const pathname = usePathname();
@@ -27,10 +28,11 @@ const MobileNav = ({ user }: MobileNavProps) => {
                     <Link href="/"
                         className='cursor-pointer items-center gap-1 px-4 flex'>
                         <Image
-                            src='/icons/logo.svg'
+                            src='/icons/ns-logo.jpg'
                             width={34}
                             height={34}
                             alt="Navsons logo"
+                            className="border rounded"
                         />
                         <h1 className='text-26 font-ibm-plex-serif font-bold text-black-1'>Navsons</h1>
                     </Link>
@@ -70,7 +72,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
                                 USER
                             </nav>
                         </SheetClose>
-                        Footer
+                        <Footer user={user} type="mobile" />
                     </div>
                 </SheetContent>
             </Sheet>
