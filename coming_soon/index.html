@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Navsons | Online Grocery Shopping - Fresh Deliveries from Farm to Kitchen</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --blue:#1e88e5;
+  --green:#43a047;
+  --dark:#0f172a;
+  --text:#e5e7eb;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter', sans-serif;
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: radial-gradient(circle at top, #0b1220, #050814);
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:40px 15px;
+}
+
+.background-glow{
+  position:fixed;
+  width:600px;
+  height:600px;
+  background: radial-gradient(circle, rgba(30,136,229,0.25), transparent 70%);
+  top:-150px;
+  left:-150px;
+  filter: blur(40px);
+  animation: floatGlow 8s ease-in-out infinite;
+  z-index:0;
+}
+
+.background-glow.green{
+  background: radial-gradient(circle, rgba(67,160,71,0.25), transparent 70%);
+  bottom:-150px;
+  right:-150px;
+  top:auto;
+  left:auto;
+}
+
+@keyframes floatGlow{
+  0%,100%{transform:translateY(0px)}
+  50%{transform:translateY(30px)}
+}
+
+.container{
+  text-align:center;
+  z-index:2;
+  max-width:900px;
+  width:100%;
+  padding:20px;
+}
+
+.badge{
+  display:inline-block;
+  padding:8px 16px;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:50px;
+  color:#9ca3af;
+  font-size:12px;
+  letter-spacing:1px;
+  margin-bottom:20px;
+}
+
+h1{
+  font-size:48px;
+  font-weight:700;
+  background: linear-gradient(90deg, var(--blue), var(--green));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:15px;
+}
+
+p{
+  color:#cbd5e1;
+  font-size:16px;
+  line-height:1.6;
+  margin-bottom:30px;
+}
+
+.hero-image{
+  width:320px;
+  height:320px;
+  margin:0 auto 30px;
+  border-radius:30px;
+  overflow:hidden;
+  border:2px solid rgba(255,255,255,0.1);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  animation: float 4s ease-in-out infinite;
+}
+
+.hero-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0px)}
+  50%{transform:translateY(-15px)}
+}
+
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-bottom:30px;
+  flex-wrap:wrap;
+}
+
+.time-box{
+  background:rgba(255,255,255,0.05);
+  padding:15px 20px;
+  border-radius:15px;
+  min-width:80px;
+  backdrop-filter:blur(10px);
+}
+
+.time-box h2{
+  color:white;
+  font-size:22px;
+}
+
+.time-box span{
+  font-size:12px;
+  color:#9ca3af;
+}
+
+.contact{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-top:20px;
+  color:#cbd5e1;
+}
+
+.contact a{
+  color:#cbd5e1;
+  text-decoration:none;
+  padding:10px 15px;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  transition:0.3s;
+}
+
+.contact a:hover{
+  background:linear-gradient(90deg,var(--blue),var(--green));
+  color:white;
+}
+
+@media(max-width:768px){
+  h1{font-size:32px;}
+  .hero-image{width:260px;height:260px;}
+}
+
+.fruit{
+  position:fixed;
+  width:40px;
+  opacity:0.15;
+  animation:floatFruit 12s linear infinite;
+  z-index:0;
+}
+
+@keyframes floatFruit{
+  0%{transform:translateY(100vh) rotate(0deg);}
+  100%{transform:translateY(-10vh) rotate(360deg);}
+}
+</style>
+</head>
+<body>
+
+<div class="background-glow"></div>
+<div class="background-glow green"></div>
+
+<img src="https://cdn-icons-png.flaticon.com/512/415/415733.png" class="fruit" style="left:10%; animation-delay:0s;">
+<img src="https://cdn-icons-png.flaticon.com/512/415/415744.png" class="fruit" style="left:30%; animation-delay:3s;">
+<img src="https://cdn-icons-png.flaticon.com/512/415/415682.png" class="fruit" style="left:70%; animation-delay:6s;">
+
+<div class="container">
+
+  <div class="badge">🍎 Fresh Fruits, Vegetables & Meat Delivery</div>
+
+  <div class="hero-image">
+    <img src="navsons-bg.png" alt="Fresh Vegetables">
+  </div>
+
+  <h1>We Are Launching Soon</h1>
+  <p>Get ready for a premium online fruits, vegetables and meat delivery experience. Freshness delivered directly to your doorstep with quality you can trust.</p>
+
+  <div class="countdown">
+    <div class="time-box">
+      <h2 id="days">00</h2>
+      <span>Days</span>
+    </div>
+    <div class="time-box">
+      <h2 id="hours">00</h2>
+      <span>Hours</span>
+    </div>
+    <div class="time-box">
+      <h2 id="minutes">00</h2>
+      <span>Minutes</span>
+    </div>
+    <div class="time-box">
+      <h2 id="seconds">00</h2>
+      <span>Seconds</span>
+    </div>
+  </div>
+
+  <div class="contact">
+    <a href="mail:info@navsons.com">info@navsons.com</a>
+    <a href="tel:+923000055563">+92 309 0055563</a>
+  </div>
+
+</div>
+
+<script>
+const launchDate = new Date("2026-07-01T00:00:00").getTime();
+
+setInterval(()=>{
+  const now = new Date().getTime();
+  const diff = launchDate - now;
+
+  document.getElementById("days").innerText = Math.floor(diff / (1000*60*60*24));
+  document.getElementById("hours").innerText = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  document.getElementById("minutes").innerText = Math.floor((diff%(1000*60*60))/(1000*60));
+  document.getElementById("seconds").innerText = Math.floor((diff%(1000*60))/1000);
+},1000);
+</script>
+
+</body>
+</html>
