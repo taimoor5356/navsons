@@ -7,7 +7,7 @@
             :shops="topRatedShops"
             :isLoading="isLoading"
         />
-        <Marketing />
+        <!-- <Marketing /> -->
         <Categories :categories="categories" :isLoading="isLoadingCategory" />
         <div v-if="incomingFlashSale.length > 0">
             <FlashSaleIncoming
