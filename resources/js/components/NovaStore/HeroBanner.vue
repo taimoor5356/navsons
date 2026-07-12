@@ -24,7 +24,7 @@
                     <img
                         :src="banner.thumbnail"
                         loading="lazy"
-                        class="w-full h-[300px] object-cover rounded-lg lg:h-[350px]"
+                        class="w-full object-contain rounded-lg lg:h-[350px] lg:object-cover"
                     />
                 </swiper-slide>
             </swiper>
