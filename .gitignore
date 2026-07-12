@@ -12,6 +12,10 @@
 /storage/app/public
 
 /public/storage
+/.builds
+/public_html
+/public_html/assets
+/public_html/build
 
 /public/.htaccess
 /public/.htaccess
