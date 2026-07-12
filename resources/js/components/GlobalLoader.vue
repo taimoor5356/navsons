@@ -6,7 +6,7 @@
                 class="fixed inset-0 z-[99999] flex items-center justify-center bg-white/30 backdrop-blur-sm"
             >
                 <img
-                    src="https://navsons.com/storage/files/1/2-Photoroom.png?timestamp=1778706157"
+                    src="https://navsons.com/storage/files/1/onlycherries.png?timestamp=1783814620"
                     alt="Loading"
                     class="w-16 h-16 md:w-20 md:h-20 global-loader-spin"
                 />
