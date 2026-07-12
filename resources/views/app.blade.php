@@ -1,7 +1,7 @@
 @php
     $generaleSetting = App\Models\GeneraleSetting::first();
 
-    $title = $generaleSetting?->title ?? config('app.name', 'Navsons');
+    $title = $generaleSetting?->title ?? config('app.name', 'Navsons | Online Grocery Shopping - Fresh Deliveries from Farm to Kitchen');
     $favicon = $generaleSetting?->favicon ?? asset('assets/favicon.png');
 @endphp
 <!DOCTYPE html>
