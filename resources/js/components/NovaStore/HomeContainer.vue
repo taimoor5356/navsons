@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CategoryShortcuts />
+        <CategoryShortcuts :categories="categories" :isLoading="isLoadingCategory" />
         <HeroBanner
             :banners="banners"
             :ads="ads"
