@@ -454,6 +454,43 @@ body {
     background: rgb(187, 187, 187)
 }
 
+.thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #0d2d6c transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+    height: 2px !important;
+    width: 2px !important;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #0d2d6c;
+}
+
+.thin-scrollbar::-webkit-scrollbar-button,
+.thin-scrollbar::-webkit-scrollbar-button:single-button,
+.thin-scrollbar::-webkit-scrollbar-button:double-button,
+.thin-scrollbar::-webkit-scrollbar-button:start,
+.thin-scrollbar::-webkit-scrollbar-button:end,
+.thin-scrollbar::-webkit-scrollbar-button:horizontal:decrement,
+.thin-scrollbar::-webkit-scrollbar-button:horizontal:increment,
+.thin-scrollbar::-webkit-scrollbar-button:vertical:decrement,
+.thin-scrollbar::-webkit-scrollbar-button:vertical:increment {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+}
+
+.thin-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
 
 
 
