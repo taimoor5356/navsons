@@ -4,7 +4,6 @@
         <HeroBanner
             :banners="banners"
             :ads="ads"
-            :shops="topRatedShops"
             :isLoading="isLoading"
         />
         <!-- <Marketing /> -->

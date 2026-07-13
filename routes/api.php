@@ -10,6 +10,7 @@ use App\Http\Controllers\API\ShopController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\BannerController;
+use App\Http\Controllers\API\VendorController;
 use App\Http\Controllers\API\CouponController;
 use App\Http\Controllers\API\MasterController;
 use App\Http\Controllers\API\ReviewController;
@@ -87,6 +88,11 @@ Route::controller(HomeController::class)->group(function () {
 // Banner route
 Route::controller(BannerController::class)->group(function () {
     Route::get('/banners', 'index');
+});
+
+// Vendor route (partner directory shown in the storefront "Our Partners" section)
+Route::controller(VendorController::class)->group(function () {
+    Route::get('/vendors', 'index');
 });
 
 // category route

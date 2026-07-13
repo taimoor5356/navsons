@@ -192,7 +192,9 @@
     'admin.ad.index',
     'admin.ad.create',
     'admin.coupon.index',
-    'admin.coupon.create'
+    'admin.coupon.create',
+    'admin.vendor.index',
+    'admin.vendor.create'
 ])
     <li class="menu-divider">
         <span class="menu-title">{{ __('Sale Management') }}</span>
@@ -290,6 +292,37 @@
                     <a href="{{ route('admin.coupon.create') }}"
                         class="subMenu hasCount {{ request()->routeIs('admin.coupon.create') ? 'active' : '' }}">
                         {{ __('Add Coupon') }}
+                    </a>
+                @endhasPermission
+            </div>
+        </div>
+    </li>
+@endhasPermission
+@hasPermission(['admin.vendor.index', 'admin.vendor.create'])
+    <!--- vendors--->
+    <li>
+        <a class="menu {{ request()->routeIs('admin.vendor.*') ? 'active' : '' }}" data-bs-toggle="collapse"
+            href="#vendorMenu">
+            <span>
+                <img class="menu-icon" src="{{ asset('assets/icons-admin/brand.svg') }}" alt="icon"
+                    loading="lazy" />
+                {{ __('Vendors') }}
+            </span>
+            <img src="{{ asset('assets/icons-admin/caret-down.svg') }}" alt="icon" class="downIcon">
+        </a>
+        <div class="collapse dropdownMenuCollapse {{ $request->routeIs('admin.vendor.*') ? 'show' : '' }}"
+            id="vendorMenu">
+            <div class="listBar">
+                @hasPermission('admin.vendor.index')
+                    <a href="{{ route('admin.vendor.index') }}"
+                        class="subMenu hasCount {{ request()->routeIs('admin.vendor.index') ? 'active' : '' }}">
+                        {{ __('List Of Vendors') }}
+                    </a>
+                @endhasPermission
+                @hasPermission('admin.vendor.create')
+                    <a href="{{ route('admin.vendor.create') }}"
+                        class="subMenu hasCount {{ request()->routeIs('admin.vendor.create') ? 'active' : '' }}">
+                        {{ __('Add Vendor') }}
                     </a>
                 @endhasPermission
             </div>

@@ -16,6 +16,7 @@ return [
             'order' => ['index', 'show', 'status.change', 'payment.status.toggle', 'assign.rider'],
             'review' => ['index', 'toggle'],
             'brand' => ['index', 'create', 'edit', 'toggle', 'destroy'],
+            'vendor' => ['index', 'create', 'edit', 'show', 'toggle', 'destroy'],
             'category' => ['index', 'create', 'edit', 'toggle', 'destroy'],
             'categoryAttribute' => ['index', 'create', 'edit', 'toggle', 'destroy'],
             'flashSale' => ['index', 'create', 'edit', 'destroy', 'toggle'],

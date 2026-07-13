@@ -1,31 +1,43 @@
 <template>
-    <div class="w-full lg:w-60 shrink-0 h-full flex flex-col">
-        <p
-            class="text-sm font-bold text-slate-900 mt-3 lg:mt-0 mb-2"
-        >
-            {{ $t("Our Partners") }}
-        </p>
+    <div v-if="isLoading || vendors.length" class="w-full lg:w-60 shrink-0 h-full flex flex-col">
+        <div class="flex items-center justify-between mt-3 lg:mt-0 mb-2">
+            <p class="text-sm font-bold text-slate-900">
+                {{ $t("Our Partners") }}
+            </p>
+            <RouterLink
+                v-if="hasMore"
+                to="/shops"
+                class="hidden lg:block text-primary text-xs font-medium hover:underline"
+            >
+                {{ $t("View all") }}
+            </RouterLink>
+        </div>
 
         <!-- mobile / tablet: horizontal scroll, no visible scrollbar -->
         <div
-            class="flex lg:hidden items-center gap-3 overflow-x-auto scrollbar-hide"
+            class="flex lg:hidden items-center gap-2 overflow-x-auto scrollbar-hide"
         >
-            <component
-                :is="brand.slug ? 'RouterLink' : 'div'"
-                v-for="brand in displayBrands"
-                :key="brand.id"
-                :to="brand.slug ? `/shops/${brand.slug}` : undefined"
-                class="shrink-0 w-14 h-14 rounded-lg border border-slate-100 flex items-center justify-center bg-white p-1.5"
-                :title="brand.name"
-            >
-                <img
-                    v-if="brand.logo"
-                    :src="brand.logo"
-                    :alt="brand.name"
-                    class="w-full h-full object-contain rounded"
-                />
-                <StorefrontIcon v-else class="w-6 h-6" colorClass="text-primary" />
-            </component>
+            <template v-if="!isLoading">
+                <div
+                    v-for="vendor in vendors"
+                    :key="vendor.id"
+                    class="shrink-0 w-14 h-14 rounded-lg border border-slate-100 flex items-center justify-center bg-white p-1.5"
+                    :title="vendor.name"
+                >
+                    <img
+                        :src="vendor.icon_image"
+                        :alt="vendor.name"
+                        loading="lazy"
+                        class="w-full h-full object-contain rounded"
+                    />
+                </div>
+            </template>
+
+            <template v-else>
+                <div v-for="i in 6" :key="i" class="shrink-0 w-14 h-14">
+                    <SkeletonLoader class="w-full h-full rounded-lg" />
+                </div>
+            </template>
         </div>
 
         <!-- large screens: only show as many as fit -->
@@ -33,60 +45,35 @@
             ref="panelRef"
             class="hidden lg:grid grid-cols-2 content-start gap-2 flex-1 overflow-hidden"
         >
-            <component
-                :is="brand.slug ? 'RouterLink' : 'div'"
-                v-for="brand in visibleBrands"
-                :key="brand.id"
-                :to="brand.slug ? `/shops/${brand.slug}` : undefined"
-                class="w-full h-24 rounded-lg border border-slate-100 flex items-center justify-center bg-white p-2"
-                :title="brand.name"
-            >
-                <img
-                    v-if="brand.logo"
-                    :src="brand.logo"
-                    :alt="brand.name"
-                    class="w-full h-full object-contain rounded"
-                />
-                <StorefrontIcon v-else class="w-9 h-9" colorClass="text-primary" />
-            </component>
-        </div>
+            <template v-if="!isLoading">
+                <div
+                    v-for="vendor in visibleVendors"
+                    :key="vendor.id"
+                    class="w-full h-24 rounded-lg border border-slate-100 flex items-center justify-center bg-white p-2"
+                    :title="vendor.name"
+                >
+                    <img
+                        :src="vendor.icon_image"
+                        :alt="vendor.name"
+                        loading="lazy"
+                        class="w-full h-full object-contain rounded"
+                    />
+                </div>
+            </template>
 
-        <RouterLink
-            v-if="hasMore"
-            to="/shops"
-            class="hidden lg:block mt-2 text-primary text-xs font-medium text-center hover:underline"
-        >
-            {{ $t("View more") }}
-        </RouterLink>
+            <template v-else>
+                <div v-for="i in 6" :key="i" class="w-full h-24">
+                    <SkeletonLoader class="w-full h-full rounded-lg" />
+                </div>
+            </template>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, nextTick } from "vue";
-import StorefrontIcon from "../../icons/StorefrontIcon.vue";
-import stripeLogo from "../../../../public/assets/gateway/Stripe.png";
-import paypalLogo from "../../../../public/assets/gateway/PayPal.png";
-import razorpayLogo from "../../../../public/assets/gateway/Razorpay.png";
-import paystackLogo from "../../../../public/assets/gateway/PayStack.png";
-import mastercardLogo from "../../../../public/assets/gateway/mastercard.png";
-import visaLogo from "../../../../public/assets/gateway/visa.png";
-
-const props = defineProps({
-    shops: {
-        type: Array,
-        default: () => [],
-    },
-});
-
-// shown until real vendor shops exist, so the section isn't empty
-const FALLBACK_BRANDS = [
-    { id: "fallback-1", name: "Stripe", logo: stripeLogo, slug: null },
-    { id: "fallback-2", name: "PayPal", logo: paypalLogo, slug: null },
-    { id: "fallback-3", name: "Razorpay", logo: razorpayLogo, slug: null },
-    { id: "fallback-4", name: "PayStack", logo: paystackLogo, slug: null },
-    { id: "fallback-5", name: "Mastercard", logo: mastercardLogo, slug: null },
-    { id: "fallback-6", name: "Visa", logo: visaLogo, slug: null },
-];
+import axios from "axios";
+import SkeletonLoader from "../SkeletonLoader.vue";
 
 const CELL_HEIGHT = 96; // matches h-24
 const ROW_GAP = 8; // matches gap-2
@@ -94,11 +81,23 @@ const COLUMNS = 2;
 
 const panelRef = ref(null);
 const maxVisible = ref(6);
+const vendors = ref([]);
+const isLoading = ref(true);
 let observer;
 
-const displayBrands = computed(() =>
-    props.shops.length ? props.shops : FALLBACK_BRANDS
-);
+const fetchVendors = async () => {
+    isLoading.value = true;
+    try {
+        const response = await axios.get("/vendors");
+        vendors.value = response.data.data.vendors;
+    } catch (error) {
+        vendors.value = [];
+    } finally {
+        isLoading.value = false;
+        await nextTick();
+        recalculate();
+    }
+};
 
 const recalculate = () => {
     if (!panelRef.value) return;
@@ -112,8 +111,7 @@ const recalculate = () => {
 };
 
 onMounted(async () => {
-    await nextTick();
-    recalculate();
+    await fetchVendors();
     observer = new ResizeObserver(() => recalculate());
     if (panelRef.value) observer.observe(panelRef.value);
     window.addEventListener("resize", recalculate);
@@ -124,10 +122,10 @@ onBeforeUnmount(() => {
     window.removeEventListener("resize", recalculate);
 });
 
-const hasMore = computed(() => displayBrands.value.length > maxVisible.value);
+const hasMore = computed(() => vendors.value.length > maxVisible.value);
 
-const visibleBrands = computed(() => {
-    if (!hasMore.value) return displayBrands.value;
-    return displayBrands.value.slice(0, maxVisible.value);
+const visibleVendors = computed(() => {
+    if (!hasMore.value) return vendors.value;
+    return vendors.value.slice(0, maxVisible.value);
 });
 </script>

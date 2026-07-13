@@ -50,6 +50,7 @@ use App\Http\Controllers\Admin\CategoryAttributeController;
 use App\Http\Controllers\Admin\MailConfigurationController;
 use App\Http\Controllers\Admin\CustomerNotificationController;
 use App\Http\Controllers\Admin\MarketController;
+use App\Http\Controllers\Admin\VendorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +96,18 @@ Route::name('admin.')->group(function () {
             Route::put('/ads/{ad}/update', 'update')->name('ad.update');
             Route::get('/ads/{ad}/toggle', 'statusToggle')->name('ad.toggle');
             Route::get('/ads/{ad}/destroy', 'destroy')->name('ad.destroy');
+        });
+
+        // Vendors (partner directory shown in the storefront "Our Partners" section)
+        Route::controller(VendorController::class)->group(function () {
+            Route::get('/partner-vendors', 'index')->name('vendor.index');
+            Route::get('/partner-vendors/create', 'create')->name('vendor.create');
+            Route::post('/partner-vendors/store', 'store')->name('vendor.store');
+            Route::get('/partner-vendors/{vendor}', 'show')->name('vendor.show');
+            Route::get('/partner-vendors/{vendor}/edit', 'edit')->name('vendor.edit');
+            Route::put('/partner-vendors/{vendor}/update', 'update')->name('vendor.update');
+            Route::get('/partner-vendors/{vendor}/toggle', 'statusToggle')->name('vendor.toggle');
+            Route::get('/partner-vendors/{vendor}/destroy', 'destroy')->name('vendor.destroy');
         });
 
         // Shops

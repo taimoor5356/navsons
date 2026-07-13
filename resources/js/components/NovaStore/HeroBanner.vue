@@ -30,7 +30,7 @@
             </swiper>
         </div>
 
-        <PartnerBrands :shops="shops" />
+        <PartnerBrands />
     </div>
 
     <!-- Skeleton loader -->
@@ -69,10 +69,6 @@ const modules = [Navigation, Pagination, A11y, Autoplay, EffectFade];
 const props = defineProps({
     banners: Array,
     ads: Array,
-    shops: {
-        type: Array,
-        default: () => [],
-    },
     isLoading: {
         type: Boolean,
         default: true,
