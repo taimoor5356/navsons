@@ -1,5 +1,5 @@
 <template>
-    <SectionContainer :title="'Feature Category'" :isLoading="isLoading">
+    <SectionContainer :title="'Featured Categories'" :isLoading="isLoading">
         <template #button>
             <div class="flex justify-center items-center gap-4">
                 <router-link

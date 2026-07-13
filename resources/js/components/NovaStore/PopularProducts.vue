@@ -1,5 +1,5 @@
 <template>
-    <SectionContainer :title="'Popular Products'" :isLoading="isLoading">
+    <SectionContainer :title="'Products'" :isLoading="isLoading" class="!pt-0 !pb-2 !px-4">
         <template #button>
             <div class="flex justify-center items-center gap-4">
                 <ViewAllBtn link="/most-popular" />
@@ -22,13 +22,21 @@
                     >
                         <swiper-slide :key="0" class="!w-auto">
                             <button
-                                class="capitalize tab_links"
-                                :class="
-                                    currentTab == 'all' ? 'tab_link_active' : ''
-                                "
+                                class="flex flex-col items-center gap-1"
                                 @click="getProductsByCategory()"
                             >
-                                all
+                                <span
+                                    class="w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 flex items-center justify-center bg-neutral-100 transition-all duration-200"
+                                    :class="currentTab == 'all' ? 'border-primary-500' : 'border-transparent'"
+                                >
+                                    <StorefrontIcon class="w-6 h-6" colorClass="text-primary" />
+                                </span>
+                                <span
+                                    class="text-xs font-medium capitalize"
+                                    :class="currentTab == 'all' ? 'text-primary-500' : 'text-slate-600'"
+                                >
+                                    {{ $t("all") }}
+                                </span>
                             </button>
                         </swiper-slide>
 
@@ -38,15 +46,26 @@
                             class="!w-auto"
                         >
                             <button
-                                class="capitalize tab_links"
-                                :class="
-                                    tab.id == currentTab
-                                        ? 'tab_link_active'
-                                        : ''
-                                "
+                                class="flex flex-col items-center gap-1"
                                 @click="getProductsByCategory(tab.id)"
                             >
-                                {{ tab.name }}
+                                <span
+                                    class="w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 flex items-center justify-center bg-neutral-100 transition-all duration-200"
+                                    :class="tab.id == currentTab ? 'border-primary-500' : 'border-transparent'"
+                                >
+                                    <img
+                                        :src="tab.thumbnail"
+                                        :alt="tab.name"
+                                        loading="lazy"
+                                        class="w-full h-full object-cover"
+                                    />
+                                </span>
+                                <span
+                                    class="text-xs font-medium capitalize truncate max-w-[4.5rem]"
+                                    :class="tab.id == currentTab ? 'text-primary-500' : 'text-slate-600'"
+                                >
+                                    {{ tab.name }}
+                                </span>
                             </button>
                         </swiper-slide>
                     </swiper>
@@ -54,52 +73,36 @@
 
                 <section
                     v-else
-                    class="flex justify-start gap-6 flex-nowrap overflow-x-auto scrollbar-hide"
+                    class="flex justify-start gap-4 flex-nowrap overflow-x-auto scrollbar-hide"
                 >
-                    <div v-for="i in 6" :key="i">
-                        <SkeletonLoader class="w-[100px] h-[50px]" />
+                    <div v-for="i in 6" :key="i" class="flex flex-col items-center gap-1">
+                        <SkeletonLoader class="w-14 h-14 md:w-16 md:h-16 rounded-full" />
+                        <SkeletonLoader class="w-12 h-3 rounded" />
                     </div>
                 </section>
             </div>
         </template>
 
         <div>
-            <section class="hidden lg:grid grid-cols-6 gap-6 mt-[32px]">
-                <!-- banner  -->
-                <a
-                :href="master.offerBanners[3]?.link"
-                    v-if="master?.offerBanners?.length >= 4"
-                    class="hidden md:block col-span-6 md:col-span-2 lg:col-span-2"
+            <section class="hidden lg:grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6 mt-[32px]">
+                <p
+                    v-if="!isCategoryProductLoading && products.length == 0"
+                    class="col-span-full text-center text-primary"
                 >
-                    <img :src="master.offerBanners[3]?.offer_banner" alt="" class="sticky top-36" />
-                    <SkeletonLoader
-                        class="w-full h-full"
-                        v-if="isCategoryProductLoading"
-                    />
-                </a>
-                <!-- Products -->
+                    No products to show
+                </p>
                 <div
-                    class="col-span-6 md:col-span-4 lg:col-span-4 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-6"
+                    v-if="!isCategoryProductLoading"
+                    v-for="product in products"
+                    :key="product.id"
+                    class="w-full"
                 >
-                    <p
-                        v-if="!isCategoryProductLoading && products.length == 0"
-                        class="col-span-full text-center text-primary"
-                    >
-                        No products to show
-                    </p>
-                    <div
-                        v-if="!isCategoryProductLoading"
-                        v-for="product in products"
-                        :key="product.id"
-                        class="w-full"
-                    >
-                        <ProductCard :product="product" />
-                    </div>
+                    <ProductCard :product="product" />
+                </div>
 
-                    <!-- loading -->
-                    <div v-else v-for="i in 6" :key="i">
-                        <SkeletonLoader class="w-full h-[220px] sm:h-[330px]" />
-                    </div>
+                <!-- loading -->
+                <div v-else v-for="i in 6" :key="i">
+                    <SkeletonLoader class="w-full h-[220px] sm:h-[330px]" />
                 </div>
             </section>
 
@@ -158,6 +161,7 @@ import axios from "axios";
 import { useAuth } from "../../stores/AuthStore";
 import { useMaster } from "../../stores/MasterStore";
 import ViewAllBtn from "../ViewAllBtn.vue";
+import StorefrontIcon from "../../icons/StorefrontIcon.vue";
 
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -323,39 +327,4 @@ onMounted(() => {
     font-weight: bolder;
 }
 
-.tab_links {
-    position: relative;
-    color: #3d434f;
-    padding: 0;
-    background: transparent;
-    border: none;
-    text-wrap: nowrap;
-    @apply text-sm lg:text-lg font-normal font-['Lato'] leading-relaxed lg:leading-snug;
-}
-
-.tab_links::after {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: var(--primary-500);
-
-    transform: scaleX(0); /* start hidden */
-    transform-origin: middle; /* animate from left -> right */
-    transition: transform 300ms ease-in-out; /* animate transform */
-    will-change: transform;
-    pointer-events: none;
-}
-
-/* when the active class is added, scale to full width */
-.tab_links.tab_link_active::after {
-    transform: scaleX(1);
-}
-
-/* optional: change text color for active state */
-.tab_link_active {
-    color: var(--primary-500);
-}
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="container-3 grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="container-3 !pt-0 !pb-2 !px-4 grid grid-cols-1 md:grid-cols-4 gap-4">
         <a
             :href="master.offerBanners[0].link"
             v-if="master.offerBanners.length > 0"

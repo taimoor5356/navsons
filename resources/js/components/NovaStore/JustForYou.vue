@@ -1,5 +1,5 @@
 <template>
-    <SectionContainer :title="'Just For You'" :isLoading="isLoading">
+    <SectionContainer :title="'Just For You'" :isLoading="isLoading" class="!pt-0 !pb-2 !px-4">
         <template #button>
             <div class="flex justify-center items-center gap-4">
                 <RouterLink

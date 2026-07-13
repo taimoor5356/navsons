@@ -8,7 +8,15 @@
         />
         <!-- <Marketing /> -->
         <PopularProducts :tabs="popularProducts" />
-        <Categories :categories="categories" :isLoading="isLoadingCategory" />
+        <!-- <Categories :categories="categories" :isLoading="isLoadingCategory" /> -->
+        <FullWidthBannerCarousel />
+        <ProductShowcase :title="'Top Offers'" sortType="low_to_high" />
+        <ProductShowcase :title="'Top Blooms'" sortType="popular_product" />
+        <FullWidthBannerCarousel />
+        <ProductShowcase :title="'New in Season'" sortType="newest" />
+        <JustForYou :justForYou="justForYou" :isLoading="isLoading" />
+        <FullWidthBannerCarousel />
+
         <div v-if="incomingFlashSale.length > 0">
             <FlashSaleIncoming
                 v-for="incomingFlash in incomingFlashSale"
@@ -25,8 +33,6 @@
         <div v-if="master.getMultiVendor">
             <TopRatedShops :shops="topRatedShops" :isLoading="isLoading" />
         </div>
-        
-        <JustForYou :justForYou="justForYou" :isLoading="isLoading" />
     </div>
 </template>
 
@@ -41,6 +47,8 @@ import FlashSaleRunning from "../NovaStore/FlashSaleRunning.vue";
 import PopularProducts from "../NovaStore/PopularProducts.vue";
 import TopRatedShops from "../NovaStore/TopRatedShops.vue";
 import JustForYou from "../NovaStore/JustForYou.vue";
+import ProductShowcase from "../NovaStore/ProductShowcase.vue";
+import FullWidthBannerCarousel from "../NovaStore/FullWidthBannerCarousel.vue";
 import { useMaster } from "../../stores/MasterStore";
 
 defineProps({

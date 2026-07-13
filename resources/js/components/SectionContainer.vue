@@ -15,7 +15,7 @@ const props = defineProps({
         <div v-if="!isLoading" class="mb-4 lg:mb-8">
             <div class="flex justify-between items-center gap-4 flex-wrap">
                 <div
-                    class="text-seocondary text-xl lg:text-3xl font-semibold font-['Lato'] lg:font-['Inter'] leading-7 lg:leading-10"
+                    class="text-[#0d2d6c] text-base lg:text-xl font-semibold font-['Lato'] lg:font-['Inter'] leading-6 lg:leading-7"
                 >
                     {{ $t(title) }}
                 </div>

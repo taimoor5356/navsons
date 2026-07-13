@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container-3">
+        <div class="container-3 !pt-0 !pb-2 !px-4">
             <div class="w-full h-auto bg-zinc-900 rounded-xl mb-6">
                 <div
                     class="flex flex-col lg:flex-row justify-between items-center w-full gap-3 z-[4] p-4 md:p-6"

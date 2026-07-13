@@ -1,5 +1,5 @@
 <template>
-    <div class="main-container py-2">
+    <div class="main-container pb-2 !px-4">
         <div
             class="flex flex-nowrap items-start gap-2 md:gap-2 overflow-x-auto scrollbar-hide"
         >

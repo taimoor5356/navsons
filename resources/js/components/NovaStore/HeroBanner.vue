@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="!isLoading"
-        class="main-container lg:mt-[2px] lg:mb-[2px] lg:flex lg:items-stretch lg:gap-3"
+        class="main-container pb-2 !px-4 lg:flex lg:items-stretch lg:gap-3"
         :dir="master.langDirection || 'ltr'"
     >
         <div class="col-span-4 lg:col-span-3 lg:flex-1 lg:min-w-0">
@@ -34,7 +34,7 @@
     </div>
 
     <!-- Skeleton loader -->
-    <div v-else class="main-container mt-2  lg:mt-[24px] lg:mb-[32px]">
+    <div v-else class="main-container pb-2 !px-4">
         <div class="col-span-4 lg:col-span-3">
             <div class="w-full aspect-[9/4] object-contain rounded-lg">
                 <SkeletonLoader class="w-full h-full object-contain rounded-lg" />
