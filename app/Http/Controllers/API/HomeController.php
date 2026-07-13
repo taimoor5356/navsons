@@ -121,18 +121,24 @@ class HomeController extends Controller
     public function popularProducts(Request $request)
     {
         $categoryId = $request->category_id;
+        $page = $request->page ?? 1;
+        $perPage = $request->per_page ?? 12;
+        $skip = ($page * $perPage) - $perPage;
 
-        $products = ProductRepository::query()->isActive()->when($categoryId, function ($query) use ($categoryId) {
+        $query = ProductRepository::query()->isActive()->when($categoryId, function ($query) use ($categoryId) {
             return $query->whereHas('categories', function ($query) use ($categoryId) {
                 return $query->where('category_id', $categoryId);
             });
         })->withCount('orders as orders_count')
             ->withAvg('reviews as average_rating', 'rating')
             ->orderByDesc('average_rating')
-            ->orderByDesc('orders_count')
-            ->take(8)->get();
+            ->orderByDesc('orders_count');
+
+        $total = $query->count();
+        $products = $query->skip($skip)->take($perPage)->get();
 
         return $this->json('popular products', [
+            'total' => $total,
             'popular_products' => ProductResource::collection($products),
         ]);
     }

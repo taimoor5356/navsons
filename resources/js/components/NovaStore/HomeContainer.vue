@@ -10,10 +10,10 @@
         <PopularProducts :tabs="popularProducts" />
         <!-- <Categories :categories="categories" :isLoading="isLoadingCategory" /> -->
         <FullWidthBannerCarousel />
-        <ProductShowcase :title="'Top Offers'" sortType="low_to_high" />
-        <ProductShowcase :title="'Top Blooms'" sortType="popular_product" />
+        <ProductShowcase :title="'Top Offers'" sortType="low_to_high" :hasDiscount="true" />
+        <ProductShowcase :title="'Top Blooms'" sortType="popular_product" categoryName="Flowers" />
         <FullWidthBannerCarousel />
-        <ProductShowcase :title="'New in Season'" sortType="newest" />
+        <ProductShowcase :title="'New in Season'" sortType="newest" :createdWithinDays="30" />
         <JustForYou :justForYou="justForYou" :isLoading="isLoading" />
         <FullWidthBannerCarousel />
 

@@ -53,6 +53,18 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    hasDiscount: {
+        type: Boolean,
+        default: false,
+    },
+    categoryName: {
+        type: String,
+        default: "",
+    },
+    createdWithinDays: {
+        type: Number,
+        default: null,
+    },
 });
 
 const products = ref([]);
@@ -66,6 +78,9 @@ onMounted(() => {
                 page: 1,
                 per_page: 12,
                 sort_type: props.sortType,
+                has_discount: props.hasDiscount ? 1 : undefined,
+                category_name: props.categoryName || undefined,
+                created_within_days: props.createdWithinDays || undefined,
             },
             headers: {
                 Authorization: authStore.token,

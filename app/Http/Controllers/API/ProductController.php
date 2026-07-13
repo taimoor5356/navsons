@@ -36,6 +36,7 @@ class ProductController extends Controller
         $search = $request->search;
         $shopID = $request->shop_id;
         $categoryID = $request->category_id;
+        $categoryName = $request->category_name;
         $attributeID = $request->attribute_id;
 
         $rating = $request->rating; // 4.0
@@ -43,6 +44,8 @@ class ProductController extends Controller
         $minPrice = $request->min_price;
         $maxPrice = $request->max_price;
         $brandID = $request->brand_id;
+        $hasDiscount = $request->boolean('has_discount');
+        $createdWithinDays = $request->created_within_days;
 
         $generaleSetting = generaleSetting('setting');
         $shop = null;
@@ -89,9 +92,17 @@ class ProductController extends Controller
                 });
             })->when($brandID, function ($query) use ($brandID) {
                 return $query->where('brand_id', $brandID);
+            })->when($hasDiscount, function ($query) {
+                return $query->where('discount_price', '>', 0);
+            })->when($createdWithinDays, function ($query) use ($createdWithinDays) {
+                return $query->where('created_at', '>=', now()->subDays($createdWithinDays));
             })->when($categoryID, function ($query) use ($categoryID) {
                 return $query->whereHas('categories', function ($query) use ($categoryID) {
                     return $query->where('id', $categoryID);
+                });
+            })->when($categoryName, function ($query) use ($categoryName) {
+                return $query->whereHas('categories', function ($query) use ($categoryName) {
+                    return $query->where('name', $categoryName);
                 });
             })->when($attributeID, function ($query) use ($attributeID) {
                 return $query->whereHas('categoryAttributes', function ($query) use ($attributeID) {

@@ -140,6 +140,48 @@
                     </swiper-slide>
                 </swiper>
             </section>
+
+            <!-- Show More Products -->
+            <div
+                v-if="!isCategoryProductLoading"
+                class="mt-4 md:mt-[30px] w-full flex justify-center"
+            >
+                <button
+                    v-if="hasMoreProducts && !loadMore"
+                    class="max-w-96 w-full max-h-12 md:max-h-14 px-6 py-4 rounded-[10px] border border-primary text-primary text-lg font-medium font-['Lato'] leading-relaxed inline-flex justify-center items-center gap-2.5 transition-all duration-300 group hover:bg-primary hover:text-white"
+                    @click="loadMoreProducts()"
+                >
+                    <span>{{ $t("Show More Products") }}</span>
+                </button>
+
+                <button
+                    v-if="loadMore"
+                    class="md:max-w-[450px] w-full px-[23px] py-[15px] rounded-[10px] border border-primary-200 text-primary flex items-center justify-center cursor-not-allowed text-primary text-base font-medium leading-6 transition-all duration-300 group hover:bg-primary hover:text-white"
+                    disabled
+                >
+                    <svg
+                        class="animate-spin -ml-1 mr-3 h-5 w-5 text-primary"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                    >
+                        <circle
+                            class="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            stroke-width="4"
+                        ></circle>
+                        <path
+                            class="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                    </svg>
+                    {{ $t("Loading products") }}...
+                </button>
+            </div>
         </div>
     </SectionContainer>
 </template>
@@ -156,7 +198,7 @@ import {
 } from "swiper/modules";
 import SkeletonLoader from "../SkeletonLoader.vue";
 import SectionContainer from "../SectionContainer.vue";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import axios from "axios";
 import { useAuth } from "../../stores/AuthStore";
 import { useMaster } from "../../stores/MasterStore";
@@ -183,9 +225,16 @@ const master = useMaster();
 // variables
 const products = ref([]);
 const currentTab = ref("");
+const currentCategoryId = ref("");
+const currentPage = ref(1);
+const perPage = 12;
+const totalProducts = ref(0);
+const loadMore = ref(false);
 
 const isLoading = ref(true);
 const isCategoryProductLoading = ref(true);
+
+const hasMoreProducts = computed(() => products.value.length < totalProducts.value);
 
 // slider module
 const modules = [Navigation, Pagination, A11y, Autoplay, FreeMode];
@@ -240,49 +289,53 @@ const tabBreakpoints = {
 };
 
 // functions
-const getProductsByCategory = (categoryId = "") => {
-    isCategoryProductLoading.value = true;
-    if (categoryId == "") {
-        currentTab.value = "all";
-    } else {
-        currentTab.value = categoryId;
-    }
+const fetchProducts = ({ append = false } = {}) => {
     axios
-        .get(popularProductsApi + "?category_id=" + categoryId, {
+        .get(popularProductsApi, {
+            params: {
+                category_id: currentCategoryId.value || undefined,
+                page: currentPage.value,
+                per_page: perPage,
+            },
             headers: {
                 Authorization: authStore.token,
             },
         })
         .then((response) => {
-            console.log(response.data.data.popular_products);
-            products.value = response.data.data.popular_products;
-            isCategoryProductLoading.value = false;
+            const newProducts = response.data.data.popular_products;
+            totalProducts.value = response.data.data.total;
+            products.value = append
+                ? products.value.concat(newProducts)
+                : newProducts;
         })
-        .catch((error) => {
+        .finally(() => {
+            isLoading.value = false;
             isCategoryProductLoading.value = false;
+            loadMore.value = false;
         });
+};
+
+const getProductsByCategory = (categoryId = "") => {
+    isCategoryProductLoading.value = true;
+    currentTab.value = categoryId == "" ? "all" : categoryId;
+    currentCategoryId.value = categoryId;
+    currentPage.value = 1;
+    fetchProducts({ append: false });
 };
 
 const getAllProducts = () => {
     isLoading.value = true;
     isCategoryProductLoading.value = true;
     currentTab.value = "all";
-    axios
-        .get(popularProductsApi, {
-            headers: {
-                Authorization: authStore.token,
-            },
-        })
-        .then((response) => {
-            console.log(response.data.data.popular_products);
-            products.value = response.data.data.popular_products;
-            isLoading.value = false;
-            isCategoryProductLoading.value = false;
-        })
-        .catch((error) => {
-            isLoading.value = false;
-            isCategoryProductLoading.value = false;
-        });
+    currentCategoryId.value = "";
+    currentPage.value = 1;
+    fetchProducts({ append: false });
+};
+
+const loadMoreProducts = () => {
+    loadMore.value = true;
+    currentPage.value++;
+    fetchProducts({ append: true });
 };
 
 // onMounted
