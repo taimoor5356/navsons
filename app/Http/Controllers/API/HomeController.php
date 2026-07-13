@@ -42,7 +42,7 @@ class HomeController extends Controller
         $banners = BannerRepository::query()->whereNull('shop_id')->active()->get();
 
         $categories = CategoryRepository::query()->whereNull('parent_id')->active()
-            ->withCount('products')->orderBy('id', 'asc')->take(10)->get();
+            ->withCount('products')->orderBy('id', 'asc')->get();
 
         $popularProducts = ProductRepository::query()->isActive()
             ->when($shop, function ($query) use ($shop) {
