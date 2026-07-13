@@ -57,8 +57,11 @@
                 </swiper-slide>
 
                 <!-- loading -->
-                <swiper-slide v-else v-for="i in 8" :key="i">
-                    <SkeletonLoader class="w-full h-[146px] rounded-lg" />
+                <swiper-slide v-else v-for="i in 8" :key="i" class="mb-8">
+                    <div class="flex flex-col items-center gap-2">
+                        <SkeletonLoader class="w-16 h-16 md:w-20 md:h-20 rounded-full" />
+                        <SkeletonLoader class="w-12 h-3 rounded" />
+                    </div>
                 </swiper-slide>
             </swiper>
         </div>
@@ -107,23 +110,23 @@ const swiperPrevSlide = () => {
 
 const breakpoints = {
     320: {
-        slidesPerView: 1.5,
-        spaceBetween: 10,
-    },
-    540: {
-        slidesPerView: 2.5,
-        spaceBetween: 10,
-    },
-    712: {
-        slidesPerView: 3,
-        spaceBetween: 10,
-    },
-    768: {
         slidesPerView: 4,
         spaceBetween: 10,
     },
-    1024: {
+    540: {
+        slidesPerView: 5,
+        spaceBetween: 10,
+    },
+    712: {
         slidesPerView: 6,
+        spaceBetween: 10,
+    },
+    768: {
+        slidesPerView: 8,
+        spaceBetween: 10,
+    },
+    1024: {
+        slidesPerView: 10,
         spaceBetween: 20,
     },
 };

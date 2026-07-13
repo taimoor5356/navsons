@@ -8,6 +8,7 @@
             :isLoading="isLoading"
         />
         <!-- <Marketing /> -->
+        <PopularProducts :tabs="popularProducts" />
         <Categories :categories="categories" :isLoading="isLoadingCategory" />
         <div v-if="incomingFlashSale.length > 0">
             <FlashSaleIncoming
@@ -22,7 +23,6 @@
             />
         </div>
         <OfferBanners />
-        <PopularProducts :tabs="popularProducts" />
         <div v-if="master.getMultiVendor">
             <TopRatedShops :shops="topRatedShops" :isLoading="isLoading" />
         </div>

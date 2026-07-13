@@ -98,6 +98,23 @@
                                 </div>
 
                                 <div class="form-group row mt-3">
+                                    <div class="col-xxl-10 col-xl-9 category-icon-thumb">
+                                        <div>
+                                            <div class="mb-2">
+                                                <h5 class="mt-2">
+                                                    {{ __('Icon Image') }}
+                                                    <span class="text-muted">{{ __('(used for top category cards, ratio 1:1)') }}</span>
+                                                </h5>
+                                                @error('icon_image')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                            <x-image-picker name="icon_image" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mt-3">
                                     <x-input label=" Name" name="name" type="text" placeholder="Enter Name"
                                         required="true" />
                                 </div>
@@ -259,15 +276,29 @@
 
                     $('input[name="parent_id"]').val(data.parent_id);
                     $('input[name="name"]').val(data.name);
-                    $('input[name="image"]').val(data.image);
-                    $('#thumbnailAdd').val(data.image);
                     $('#description').val(data.description);
-                    $('.holder img').attr('src', data.thumbnail);
                     $('input[name="is_active"]').prop('checked', data.is_active);
+
+                    setImagePicker('image', data.image, data.thumbnail);
+                    setImagePicker('icon_image', data.icon_image, data.icon_thumbnail);
                 }
             }).fail((jqXHR, textStatus, errorThrown) => {
                 console.log(jqXHR.responseText, textStatus, errorThrown);
             });
+        }
+
+        const setImagePicker = (name, value, previewUrl) => {
+            const container = $(`input[name="${name}"]`).closest('.image-container');
+            container.find(`input[name="${name}"]`).val(value ?? '');
+            container.find('.thumbnailAdd').val(value ? value.split('/').pop() : '');
+            container.find('.holder img').attr('src', previewUrl || '{{ asset("default/default.jpg") }}');
+        }
+
+        const resetImagePicker = (name) => {
+            const container = $(`input[name="${name}"]`).closest('.image-container');
+            container.find(`input[name="${name}"]`).val('');
+            container.find('.thumbnailAdd').val('');
+            container.find('.holder img').attr('src', '{{ asset("default/default.jpg") }}');
         }
 
         addChildButton.on('click', function() {
@@ -312,12 +343,12 @@
 
         const resetForm = () => {
             form.attr('action', "{{ route('admin.category.store') }}");
-            $('.holder img').attr('src', '{{ asset("default/default.jpg") }}');
             $('input[name="name"]').val('');
-            $('input[name="image"]').val('');
-            $('#thumbnailAdd').val('');
             $('#description').val('');
             $('input[name="is_active"]').prop('checked', true);
+
+            resetImagePicker('image');
+            resetImagePicker('icon_image');
             deleteChildButton.removeClass('btn-danger');
             deleteChildButton.addClass('btn-secondary');
             deleteChildButton.attr('disabled', true);

@@ -72,6 +72,23 @@ class Category extends Model
         );
     }
 
+    /**
+     * Generates an icon thumbnail attribute, falling back to the regular thumbnail.
+     *
+     * @return Attribute The generated icon thumbnail attribute.
+     */
+    public function iconThumbnail(): Attribute
+    {
+        $iconThumbnail = $this->thumbnail;
+        if ($this->icon_image && Storage::exists($this->icon_image)) {
+            $iconThumbnail = Storage::url($this->icon_image);
+        }
+
+        return Attribute::make(
+            get: fn () => $iconThumbnail
+        );
+    }
+
     public function attributes(): HasMany
     {
         return $this->hasMany(CategoryAttribute::class, 'category_id')->valid();

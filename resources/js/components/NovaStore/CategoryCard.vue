@@ -1,29 +1,20 @@
 <template>
     <router-link :to="routeUrl"
-        class="w-full p-2 transition-all duration-300 border border-transparent group hover:border-green-500 bg-neutral-100 hover:bg-green-300/10 rounded-xl inline-flex justify-center items-center gap-4"
+        class="w-full flex flex-col justify-center items-center gap-2 group"
     >
         <div
-            class="flex-1 pb-2 bg-white rounded-lg inline-flex flex-col justify-center items-center gap-2"
+            class="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-neutral-100 border border-transparent group-hover:border-green-500 transition-all duration-300 flex items-center justify-center"
         >
             <img
-                class="h-36 w-full rounded-lg object-cover"
+                class="w-full h-full object-cover"
                 :src="props.category?.thumbnail"
                 alt="icon"
             />
-            <div
-                class="w-full flex flex-col justify-center items-center gap-0.5"
-            >
-                <div
-                    class="w-full text-center justify-start text-zinc-900 text-base font-semibold font-['Lato'] leading-normal"
-                >
-                    {{ truncate(category?.name, 30) }}
-                </div>
-                <div
-                    class="text-slate-500 text-xs font-semibold font-['Lato'] leading-tight"
-                >
-                    {{ category?.total_products }} {{$t('Items')}}
-                </div>
-            </div>
+        </div>
+        <div
+            class="w-full text-center justify-start text-zinc-900 text-sm font-semibold font-['Lato'] leading-tight truncate"
+        >
+            {{ truncate(category?.name, 20) }}
         </div>
     </router-link>
 </template>

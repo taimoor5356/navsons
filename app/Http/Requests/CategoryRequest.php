@@ -27,6 +27,7 @@ class CategoryRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
             'image' => [$required, 'max:255'],
+            'icon_image' => ['nullable', 'max:255'],
         ];
     }
 

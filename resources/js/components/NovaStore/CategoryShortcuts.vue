@@ -17,7 +17,7 @@
                         @click="goToCategory(category.id)"
                     >
                         <img
-                            :src="category.thumbnail"
+                            :src="category.icon_image"
                             :alt="category.name"
                             loading="lazy"
                             class="w-full h-full object-cover"
