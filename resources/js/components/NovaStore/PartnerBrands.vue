@@ -21,7 +21,7 @@
                 <div
                     v-for="vendor in vendors"
                     :key="vendor.id"
-                    class="shrink-0 w-14 h-14 rounded-lg border border-slate-100 flex items-center justify-center bg-white p-1.5"
+                    class="shrink-0 w-[6.5rem] h-[4.5rem] rounded-lg border border-slate-100 flex items-center justify-center bg-white p-1.5"
                     :title="vendor.name"
                 >
                     <img
@@ -34,7 +34,7 @@
             </template>
 
             <template v-else>
-                <div v-for="i in 6" :key="i" class="shrink-0 w-14 h-14">
+                <div v-for="i in 6" :key="i" class="shrink-0 w-[6.5rem] h-[4.5rem]">
                     <SkeletonLoader class="w-full h-full rounded-lg" />
                 </div>
             </template>
