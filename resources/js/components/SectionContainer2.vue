@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <section class="max-w-[1408px] mx-auto px-4 2xl:px-0 pb-4 xl:pb-16">
+    <section class="max-w-[1280px] mx-auto px-4 2xl:px-0 pb-4 xl:pb-16">
 
         <slot name="counter"></slot>
 

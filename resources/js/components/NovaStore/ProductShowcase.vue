@@ -8,7 +8,7 @@
 
         <div
             v-if="!isLoading"
-            class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 items-start"
+            class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 items-start"
         >
             <p
                 v-if="products.length == 0"
@@ -24,7 +24,7 @@
         <!-- loading -->
         <div
             v-else
-            class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-6 items-start"
+            class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-6 items-start"
         >
             <div v-for="i in 6" :key="i">
                 <SkeletonLoader class="w-full h-[220px] sm:h-[330px]" />

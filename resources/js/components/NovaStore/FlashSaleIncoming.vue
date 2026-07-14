@@ -85,11 +85,11 @@ const swiperNextSlide = () => {
 
 const breakpoints = {
     320: {
-        slidesPerView: 1,
+        slidesPerView: 2,
         spaceBetween: 8,
     },
     500: {
-        slidesPerView: 1.5,
+        slidesPerView: 2,
         spaceBetween: 12,
     },
     712: {

@@ -75,23 +75,23 @@ body {
 }
 
 .main-container {
-    @apply max-w-[1408px] mx-auto px-[7.5px];
+    @apply max-w-[1280px] mx-auto px-[7.5px];
 }
 
 .container-2 {
-    @apply max-w-[1408px] mx-auto;
+    @apply max-w-[1280px] mx-auto;
 }
 
 .container-3 {
-    @apply max-w-[1408px] mx-auto px-4 2xl:px-0 py-4 lg:py-8;
+    @apply max-w-[1280px] mx-auto px-4 2xl:px-0 py-4 lg:py-8;
 }
 
 .container-4 {
-    @apply max-w-[1408px] mx-auto px-4 2xl:px-0;
+    @apply max-w-[1280px] mx-auto px-4 2xl:px-0;
 }
 
 .container-5 {
-    @apply max-w-[1408px] mx-auto px-4 2xl:px-0 py-4 lg:py-8;
+    @apply max-w-[1280px] mx-auto px-4 2xl:px-0 py-4 lg:py-8;
 }
 
 
