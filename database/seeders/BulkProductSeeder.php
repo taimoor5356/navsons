@@ -15,6 +15,16 @@ class BulkProductSeeder extends Seeder
     private const CHUNK_SIZE = 250;
 
     /**
+     * Every product this seeder creates gets a `code` starting with this
+     * prefix. Re-running the seeder soft-deletes anything already tagged
+     * with it (plus the old pre-rewrite "... #123" fake names) before
+     * inserting a fresh batch, so it's safe to run repeatedly — including
+     * against a live database — without ever touching real merchant
+     * products, which will never coincidentally share this code prefix.
+     */
+    private const SEED_CODE_PREFIX = 'SEED-';
+
+    /**
      * Real, category-appropriate product names (with the actual Pakistani
      * varieties for fruits/vegetables), each tagged with an 'image' key that
      * points into data/product_images.php for a real representative photo.
@@ -379,6 +389,14 @@ class BulkProductSeeder extends Seeder
             ? require __DIR__ . '/data/product_images.php'
             : [];
 
+        $removed = Product::where('code', 'like', self::SEED_CODE_PREFIX . '%')
+            ->orWhere('name', 'like', '% #%')
+            ->delete();
+
+        if ($removed > 0) {
+            $this->command->info("Removed {$removed} previously seeded product(s) before reseeding.");
+        }
+
         // Round-robin fill guarantees every category gets an (almost) even
         // share of products, then shuffle so the product/category pairing
         // looks random rather than sequential.
@@ -394,9 +412,10 @@ class BulkProductSeeder extends Seeder
         $bar->start();
 
         $chunks = array_chunk($categoryAssignments, self::CHUNK_SIZE);
+        $sequence = 0;
 
         foreach ($chunks as $chunk) {
-            DB::transaction(function () use ($chunk, $shop, $bar, $productImages) {
+            DB::transaction(function () use ($chunk, &$sequence, $shop, $bar, $productImages) {
                 foreach ($chunk as $category) {
                     $config = $this->categoryProducts[$category->name] ?? null;
 
@@ -405,6 +424,8 @@ class BulkProductSeeder extends Seeder
 
                         continue;
                     }
+
+                    $sequence++;
 
                     $item = $config['items'][array_rand($config['items'])];
                     $unit = $config['units'][array_rand($config['units'])];
@@ -422,6 +443,7 @@ class BulkProductSeeder extends Seeder
                     $product = Product::create([
                         'shop_id' => $shop->id,
                         'name' => $name,
+                        'code' => self::SEED_CODE_PREFIX . str_pad((string) $sequence, 5, '0', STR_PAD_LEFT),
                         'price' => $price,
                         'discount_price' => $discountPrice,
                         'quantity' => mt_rand(10, 500),
