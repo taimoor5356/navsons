@@ -115,6 +115,23 @@
                                 </div>
 
                                 <div class="form-group row mt-3">
+                                    <div class="col-xxl-10 col-xl-9 category-banner-thumb">
+                                        <div>
+                                            <div class="mb-2">
+                                                <h5 class="mt-2">
+                                                    {{ __('Banner Image') }}
+                                                    <span class="text-muted">{{ __('(shown in the category hover dropdown menu)') }}</span>
+                                                </h5>
+                                                @error('banner_image')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                            <x-image-picker name="banner_image" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mt-3">
                                     <x-input label=" Name" name="name" type="text" placeholder="Enter Name"
                                         required="true" />
                                 </div>
@@ -281,6 +298,7 @@
 
                     setImagePicker('image', data.image, data.thumbnail);
                     setImagePicker('icon_image', data.icon_image, data.icon_thumbnail);
+                    setImagePicker('banner_image', data.banner_image, data.banner_thumbnail);
                 }
             }).fail((jqXHR, textStatus, errorThrown) => {
                 console.log(jqXHR.responseText, textStatus, errorThrown);
@@ -349,6 +367,7 @@
 
             resetImagePicker('image');
             resetImagePicker('icon_image');
+            resetImagePicker('banner_image');
             deleteChildButton.removeClass('btn-danger');
             deleteChildButton.addClass('btn-secondary');
             deleteChildButton.attr('disabled', true);

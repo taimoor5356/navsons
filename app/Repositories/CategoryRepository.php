@@ -31,6 +31,7 @@ class CategoryRepository extends Repository
             'parent_id' => $request->parent_id,
             'image' => $request->image ?? null,
             'icon_image' => $request->icon_image ?? null,
+            'banner_image' => $request->banner_image ?? null,
             'description' => $request->description,
             'status' => true,
         ]);
@@ -62,6 +63,7 @@ class CategoryRepository extends Repository
             'parent_id' => $request->parent_id,
             'image' => $request->image ?? $category->image,
             'icon_image' => $request->icon_image ?? $category->icon_image,
+            'banner_image' => $request->banner_image ?? $category->banner_image,
             'description' => $request->description,
         ]);
 

@@ -89,6 +89,23 @@ class Category extends Model
         );
     }
 
+    /**
+     * Generates a banner image attribute, falling back to the regular thumbnail.
+     *
+     * @return Attribute The generated banner thumbnail attribute.
+     */
+    public function bannerThumbnail(): Attribute
+    {
+        $bannerThumbnail = $this->thumbnail;
+        if ($this->banner_image && Storage::exists($this->banner_image)) {
+            $bannerThumbnail = Storage::url($this->banner_image);
+        }
+
+        return Attribute::make(
+            get: fn () => $bannerThumbnail
+        );
+    }
+
     public function attributes(): HasMany
     {
         return $this->hasMany(CategoryAttribute::class, 'category_id')->valid();

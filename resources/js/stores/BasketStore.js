@@ -16,6 +16,7 @@ export const useBasketStore = defineStore("basketStore", {
         products: [],
         checkoutProducts: [],
         selectedShopIds: [],
+        knownShopIds: [],
         total_amount: 0,
         delivery_charge: 0,
         coupon_discount: 0,
@@ -109,6 +110,8 @@ export const useBasketStore = defineStore("basketStore", {
                     if (!data.is_buy_now) {
                         this.total = response.data.data.total;
                         this.products = response.data.data.cart_items;
+                        this.syncSelectedShopIds();
+                        this.fetchCheckoutProducts();
                         toast(content, {
                             type: "default",
                             hideProgressBar: true,
@@ -162,6 +165,8 @@ export const useBasketStore = defineStore("basketStore", {
                 }).then((response) => {
                     this.total = response.data.data.total;
                     this.products = response.data.data.cart_items;
+                    this.syncSelectedShopIds();
+                    this.fetchCheckoutProducts();
 
                     if (response.data.data.info) {
                         toast.warning(response.data.data.info, {
@@ -181,6 +186,7 @@ export const useBasketStore = defineStore("basketStore", {
                 this.products = [];
                 this.checkoutProducts = [];
                 this.selectedShopIds = [];
+                this.knownShopIds = [];
                 this.total_amount = 0;
                 this.delivery_charge = 0;
                 this.coupon_discount = 0;
@@ -220,19 +226,12 @@ export const useBasketStore = defineStore("basketStore", {
                 ).then((response) => {
                     this.total = response.data.data.total;
                     this.products = response.data.data.cart_items;
+                    this.syncSelectedShopIds();
                     this.fetchCheckoutProducts();
 
                     if (
                         response.data.message == "product removed from cart"
                     ) {
-                        const shopIds = this.products.map(
-                            (shop) => shop.shop_id
-                        );
-                        this.selectedShopIds = this.selectedShopIds.filter(
-                            (id) => shopIds.includes(id)
-                        );
-                        // const exists = shopIds.some((id) => selectedShopIds.includes(id));
-
                         if (this.products.length === 0) {
                             this.selectedShopIds = [];
                             this.checkoutProducts = [];
@@ -286,6 +285,7 @@ export const useBasketStore = defineStore("basketStore", {
                 }).then((response) => {
                     this.total = response.data.data.total;
                     this.products = response.data.data.cart_items;
+                    this.syncSelectedShopIds();
                     this.fetchCheckoutProducts();
 
                     if (response.data.data.info) {
@@ -325,6 +325,7 @@ export const useBasketStore = defineStore("basketStore", {
                 ).then((response) => {
                     this.total = response.data.data.total;
                     this.products = response.data.data.cart_items;
+                    this.syncSelectedShopIds();
                     this.fetchCheckoutProducts();
 
                     if (response.data.data.info) {
@@ -341,6 +342,33 @@ export const useBasketStore = defineStore("basketStore", {
                     }
                 });
             }
+        },
+
+        /**
+         * Keeps selectedShopIds in sync with the shops actually present in the cart:
+         * drops shops that are no longer in the cart, and auto-selects any shop
+         * seen for the first time so its items count toward the cart total by
+         * default. Shops the user has manually deselected stay deselected on
+         * later updates, since they're already tracked in knownShopIds.
+         */
+        syncSelectedShopIds() {
+            const currentShopIds = this.products.map((shop) => shop.shop_id);
+
+            this.selectedShopIds = this.selectedShopIds.filter((id) =>
+                currentShopIds.includes(id)
+            );
+            this.knownShopIds = this.knownShopIds.filter((id) =>
+                currentShopIds.includes(id)
+            );
+
+            currentShopIds.forEach((id) => {
+                if (!this.knownShopIds.includes(id)) {
+                    this.knownShopIds.push(id);
+                    if (!this.selectedShopIds.includes(id)) {
+                        this.selectedShopIds.push(id);
+                    }
+                }
+            });
         },
 
         /**

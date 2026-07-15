@@ -22,6 +22,7 @@ class CategoryResource extends JsonResource
             'name' => $translation ? $translation->name : ($this->name ?? null),
             'thumbnail' => $this->thumbnail ?? null,
             'icon_image' => $this->icon_thumbnail ?? null,
+            'banner_image' => $this->banner_thumbnail ?? null,
             'total_products' => $this->products->count() ?? null,
             'sub_categories' => CategoryResource::collection($this->subCategories ?? []),
         ];

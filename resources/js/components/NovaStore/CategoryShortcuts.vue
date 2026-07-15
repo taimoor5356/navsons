@@ -112,7 +112,7 @@
                             @click="hoveredIndex = null"
                         >
                             <img
-                                :src="categories[hoveredIndex].thumbnail"
+                                :src="categories[hoveredIndex].banner_image || categories[hoveredIndex].thumbnail"
                                 :alt="categories[hoveredIndex].name"
                                 class="max-w-full max-h-40 object-contain"
                             />

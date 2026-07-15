@@ -25,6 +25,8 @@ class AdminCategoryResource extends JsonResource
             'image' => $this->image ?? null,
             'icon_thumbnail' => $this->icon_thumbnail ?? null,
             'icon_image' => $this->icon_image ?? null,
+            'banner_thumbnail' => $this->banner_thumbnail ?? null,
+            'banner_image' => $this->banner_image ?? null,
             'description' => $this->description ?? null,
             'is_active' => $this->status ?? null,
         ];

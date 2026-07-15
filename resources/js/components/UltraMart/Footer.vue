@@ -1,6 +1,6 @@
 <template>
     <footer
-        class="relative bg-[#17181D] py-6 px-4 lg:py-[64px] overflow-hidden"
+        class="relative bg-[#17181D] pt-6 pb-16 md:pb-6 px-4 lg:py-[64px] overflow-hidden"
     >
         <div class="container-2 flex flex-col gap-6">
             <section class="w-full grid grid-cols-12 gap-6">

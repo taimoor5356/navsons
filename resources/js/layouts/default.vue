@@ -3,7 +3,7 @@
         <NavbarTopContainer :themeName="master.themeName"/>
         <Navbar :themeName="master.themeName"/>
 
-        <div class="flex-grow pb-16 md:pb-0">
+        <div class="flex-grow">
             <slot />
         </div>
 

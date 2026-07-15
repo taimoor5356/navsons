@@ -1,6 +1,6 @@
 <template>
     <div class="container-2">
-        <div v-show="!isLoading" class="mb-28 md:mb-[195px]">
+        <div v-show="!isLoading" class="mb-44 md:mb-32 lg:mb-0">
             <div class="">
                 <!-- <div class="flex items-center gap-2 overflow-hidden pt-4">
                     <router-link to="/" class="w-6 h-6">

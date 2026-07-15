@@ -75,7 +75,7 @@
                 @click="showCardCanvas"
                 class="cursor-pointer relative"
             >
-                <Bag colorClass="text-slate-700" height="21" width="21" />
+                <Bag colorClass="text-slate-700" height="24" width="24" />
                 <div
                     class="absolute -top-2 -right-1.5 w-3.5 h-3.5 bg-primary-500 rounded-2xl outline outline-1 outline-white inline-flex flex-col justify-center items-center gap-1.5 text-white text-[8.53px] font-bold leading-3"
                 >

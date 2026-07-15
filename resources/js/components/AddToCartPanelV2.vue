@@ -1,6 +1,6 @@
 <template>
     <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:hidden fixed right-0 bg-white h-auto w-full transition-all duration-500 z-20 bottom-0 p-4 gap-1"
+        class="grid grid-cols-1 md:grid-cols-2 lg:hidden fixed right-0 bg-white h-auto w-full transition-all duration-500 z-20 bottom-16 md:bottom-0 p-4 gap-1"
     >
         <div class="flex justify-start items-center gap-2">
             <p class="text-primary-500 text-base md:text-xl font-bold leading-normal">

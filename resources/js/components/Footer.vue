@@ -1,5 +1,5 @@
 <template>
-    <div class="relative lg:py-[64px] lg:pt-8  overflow-hidden" :style="{ backgroundColor: '#0d2d6c' }">
+    <div class="relative pb-16 md:pb-0 lg:py-[64px] lg:pt-8 overflow-hidden" :style="{ backgroundColor: '#0d2d6c' }">
         <FooterTop />
         <FooterBottom />
 
