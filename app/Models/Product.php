@@ -120,7 +120,9 @@ class Product extends Model
     public function thumbnail(): Attribute
     {
         $thumbnail = asset('default/default.jpg');
-        if ($this->product_thumbnail && Storage::exists($this->product_thumbnail)) {
+        if ($this->product_thumbnail && Str::startsWith($this->product_thumbnail, ['http://', 'https://'])) {
+            $thumbnail = $this->product_thumbnail;
+        } elseif ($this->product_thumbnail && Storage::exists($this->product_thumbnail)) {
             $thumbnail = Storage::url($this->product_thumbnail);
         }
 

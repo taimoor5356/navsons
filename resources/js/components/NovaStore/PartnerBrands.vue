@@ -1,7 +1,7 @@
 <template>
     <div v-if="isLoading || vendors.length" class="w-full lg:w-60 shrink-0 h-full flex flex-col">
         <div class="flex items-center justify-between mt-3 lg:mt-0 mb-2">
-            <p class="text-sm font-bold text-slate-900">
+            <p class="text-[#0d2d6c] text-base lg:text-xl font-semibold font-['Lato'] lg:font-['Inter'] leading-6 lg:leading-7">
                 {{ $t("Our Partners") }}
             </p>
             <RouterLink

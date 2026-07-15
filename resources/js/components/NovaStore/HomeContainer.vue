@@ -1,35 +1,57 @@
 <template>
     <div>
-        <CategoryShortcuts :categories="categories" :isLoading="isLoadingCategory" />
-        <HeroBanner
-            :banners="banners"
-            :ads="ads"
-            :isLoading="isLoading"
-        />
+        <div class="border-b border-slate-100">
+            <CategoryShortcuts :categories="categories" :isLoading="isLoadingCategory" />
+        </div>
+        <div class="border-b border-slate-100">
+            <HeroBanner
+                :banners="banners"
+                :ads="ads"
+                :isLoading="isLoading"
+            />
+        </div>
         <!-- <Marketing /> -->
-        <PopularProducts :tabs="popularProducts" />
+        <div class="border-b border-slate-100">
+            <PopularProducts :tabs="popularProducts" />
+        </div>
         <!-- <Categories :categories="categories" :isLoading="isLoadingCategory" /> -->
-        <FullWidthBannerCarousel />
-        <ProductShowcase :title="'Top Offers'" sortType="low_to_high" :hasDiscount="true" />
-        <ProductShowcase :title="'Top Blooms'" sortType="popular_product" categoryName="Flowers" />
-        <FullWidthBannerCarousel />
-        <ProductShowcase :title="'New in Season'" sortType="newest" :createdWithinDays="30" />
-        <JustForYou :justForYou="justForYou" :isLoading="isLoading" />
-        <FullWidthBannerCarousel />
+        <div class="border-b border-slate-100">
+            <FullWidthBannerCarousel />
+        </div>
+        <div class="border-b border-slate-100">
+            <ProductShowcase :title="'Top Offers'" sortType="low_to_high" :hasDiscount="true" />
+        </div>
+        <div class="border-b border-slate-100">
+            <ProductShowcase :title="'Top Blooms'" sortType="popular_product" categoryName="Flowers" />
+        </div>
+        <div class="border-b border-slate-100">
+            <FullWidthBannerCarousel />
+        </div>
+        <div class="border-b border-slate-100">
+            <ProductShowcase :title="'New in Season'" sortType="newest" :createdWithinDays="30" />
+        </div>
+        <div class="border-b border-slate-100">
+            <JustForYou :justForYou="justForYou" :isLoading="isLoading" />
+        </div>
+        <div class="border-b border-slate-100">
+            <FullWidthBannerCarousel />
+        </div>
 
-        <div v-if="incomingFlashSale.length > 0">
+        <div v-if="incomingFlashSale.length > 0" class="border-b border-slate-100">
             <FlashSaleIncoming
                 v-for="incomingFlash in incomingFlashSale"
                 :flashSale="incomingFlash"
             />
         </div>
-        <div v-if="runningFlashSale.length > 0">
+        <div v-if="runningFlashSale.length > 0" class="border-b border-slate-100">
             <FlashSaleRunning
                 v-for="flashSale in runningFlashSale"
                 :flashSale="flashSale"
             />
         </div>
-        <OfferBanners />
+        <div class="border-b border-slate-100">
+            <OfferBanners />
+        </div>
         <div v-if="master.getMultiVendor">
             <TopRatedShops :shops="topRatedShops" :isLoading="isLoading" />
         </div>
