@@ -17,7 +17,7 @@
                             <div class="flex gap-2">
                                 <label for="upload"
                                     class="text-white text-sm font-normal px-2 py-1 md:px-3 md:py-2 bg-slate-800 rounded-md cursor-pointer">
-                                    <input type="file" id="upload" class="hidden" @change="ChangeProfilePhoto">
+                                    <input type="file" id="upload" accept="image/*" class="sr-only" @change="ChangeProfilePhoto">
                                     {{ $t('Change Photo') }}
                                 </label>
                                 <button v-if="ChangeProfile"
