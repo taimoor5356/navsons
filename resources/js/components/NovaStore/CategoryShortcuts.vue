@@ -108,7 +108,7 @@
                     <div class="col-span-4 h-full">
                         <RouterLink
                             :to="`/categories/${categories[hoveredIndex].id}`"
-                            class="flex w-full h-full rounded-md overflow-hidden bg-slate-50 items-center justify-center"
+                            class="flex w-full h-full rounded-md overflow-hidden items-center justify-center"
                             @click="hoveredIndex = null"
                         >
                             <img

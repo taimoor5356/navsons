@@ -37,7 +37,7 @@ import "swiper/css/pagination";
 const master = useMaster();
 const modules = [Pagination, Autoplay];
 
-const banners = computed(() => master.offerBanners || []);
+const banners = computed(() => (master.offerBanners || []).slice(0, 4));
 </script>
 
 <style scoped>
