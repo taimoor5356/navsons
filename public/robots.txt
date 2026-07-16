@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /shop
+Disallow: /seller
+Disallow: /rider
+
+Sitemap: https://navsons.com/sitemap.xml
