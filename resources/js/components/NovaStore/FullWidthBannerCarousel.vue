@@ -5,6 +5,7 @@
             :modules="modules"
             :pagination="{ clickable: true }"
             :autoplay="{ delay: 4000, disableOnInteraction: false }"
+            :auto-height="true"
             class="w-full rounded-lg overflow-hidden banner_carousel green_bullet"
         >
             <swiper-slide v-for="(banner, index) in banners" :key="index">
@@ -17,7 +18,7 @@
                         :src="banner.offer_banner"
                         alt=""
                         loading="lazy"
-                        class="w-full h-auto max-h-[220px] lg:max-h-[320px] object-cover"
+                        class="w-full h-auto"
                     />
                 </component>
             </swiper-slide>
