@@ -365,6 +365,20 @@
                                                     {{ $t(menu.name) }}
                                                 </a>
                                             </div>
+
+                                            <div
+                                                v-for="link in companyLinks"
+                                                :key="link.to"
+                                                class="w-full text-base leading-normal"
+                                            >
+                                                <router-link
+                                                    :to="link.to"
+                                                    class="text-slate-950 block font-medium"
+                                                    @click="mobileMenuOpen = false"
+                                                >
+                                                    {{ $t(link.name) }}
+                                                </router-link>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -524,6 +538,12 @@ onMounted(() => {
 });
 
 const mobileMenuOpen = ref(false);
+
+const companyLinks = [
+    { name: "About Us", to: "/about-us" },
+    { name: "Terms & Conditions", to: "/terms-and-conditions" },
+    { name: "Privacy Policy", to: "/privacy-policy" },
+];
 
 const showLoginDialog = () => {
     mobileMenuOpen.value = false;

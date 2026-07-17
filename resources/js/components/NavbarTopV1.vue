@@ -56,7 +56,7 @@
                         leave-to-class="transform opacity-0 scale-95"
                     >
                         <MenuItems
-                            class="absolute z-50 w-48 mt-1 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                            class="absolute z-50 w-56 mt-1 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-96 overflow-y-auto"
                             :class="
                                 master.langDirection == 'rtl'
                                     ? 'left-0'
@@ -187,8 +187,11 @@ const navLinks = [
     { name: "Products", to: "/products" },
     { name: "Most Popular", to: "/most-popular" },
     { name: "Best Deals", to: "/best-deal" },
+    { name: "About Us", to: "/about-us" },
     { name: "Contact", to: "/contact-us" },
     { name: "Blogs", to: "/blogs" },
+    { name: "Terms & Conditions", to: "/terms-and-conditions" },
+    { name: "Privacy Policy", to: "/privacy-policy" },
 ];
 
 onMounted(() => {

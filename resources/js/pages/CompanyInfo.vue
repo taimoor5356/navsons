@@ -1,7 +1,11 @@
 <template>
     <div>
         <!-- Sticky scrollable tab bar -->
-        <div class="sticky top-16 md:top-24 z-10 bg-white border-b border-slate-200 shadow-sm">
+        <div
+            ref="tabBarEl"
+            class="sticky z-10 bg-white border-b border-slate-200 shadow-sm"
+            :style="{ top: tabBarOffset + 'px' }"
+        >
             <div class="main-container">
                 <div class="flex flex-wrap justify-between items-center">
                     <button
@@ -20,7 +24,7 @@
             </div>
         </div>
 
-        <section id="about-us" class="scroll-mt-[112px] md:scroll-mt-[152px]">
+        <section id="about-us" :style="{ scrollMarginTop: sectionScrollOffset + 'px' }">
             <div class="main-container pt-8 md:pt-10">
                 <SectionRibbon text="About Us" />
             </div>
@@ -29,28 +33,28 @@
             <ManagementTeam />
         </section>
 
-        <section id="blogs" class="scroll-mt-[112px] md:scroll-mt-[152px]">
+        <section id="blogs" :style="{ scrollMarginTop: sectionScrollOffset + 'px' }">
             <div class="main-container pt-8 md:pt-10">
                 <SectionRibbon text="Blogs" />
             </div>
             <Blog />
         </section>
 
-        <section id="contact-us" class="scroll-mt-[112px] md:scroll-mt-[152px]">
+        <section id="contact-us" :style="{ scrollMarginTop: sectionScrollOffset + 'px' }">
             <div class="main-container pt-8 md:pt-10">
                 <SectionRibbon text="Contact Us" />
             </div>
             <ContactUs />
         </section>
 
-        <section id="terms-and-conditions" class="scroll-mt-[112px] md:scroll-mt-[152px]">
+        <section id="terms-and-conditions" :style="{ scrollMarginTop: sectionScrollOffset + 'px' }">
             <div class="main-container pt-8 md:pt-10">
                 <SectionRibbon text="Terms & Conditions" />
             </div>
             <TermsAndConditions />
         </section>
 
-        <section id="privacy-policy" class="scroll-mt-[112px] md:scroll-mt-[152px]">
+        <section id="privacy-policy" :style="{ scrollMarginTop: sectionScrollOffset + 'px' }">
             <div class="main-container pt-8 md:pt-10">
                 <SectionRibbon text="Privacy Policy" />
             </div>
@@ -72,6 +76,45 @@ import KeyDivisions from '../components/KeyDivisions.vue';
 import ManagementTeam from '../components/ManagementTeam.vue';
 
 const route = useRoute();
+
+const tabBarEl = ref(null);
+const tabBarOffset = ref(0);
+const sectionScrollOffset = ref(0);
+
+// Figures out how tall whatever is currently stuck at the top of the
+// viewport is (site navbar, which differs by theme/breakpoint), so the
+// tab bar can sit flush beneath it instead of a guessed pixel offset.
+const measureStickyOffset = () => {
+    const probeX = window.innerWidth / 2;
+    const probe = document.elementFromPoint(probeX, 1);
+
+    let offset = 0;
+    let el = probe;
+    while (el && el !== document.body) {
+        if (el === tabBarEl.value) {
+            el = el.parentElement;
+            continue;
+        }
+        const style = window.getComputedStyle(el);
+        if (style.position === 'sticky' || style.position === 'fixed') {
+            offset = Math.max(offset, Math.round(el.getBoundingClientRect().bottom));
+        }
+        el = el.parentElement;
+    }
+
+    tabBarOffset.value = offset;
+    sectionScrollOffset.value = offset + (tabBarEl.value?.offsetHeight || 56) + 16;
+};
+
+let measureTicking = false;
+const scheduleMeasure = () => {
+    if (measureTicking) return;
+    measureTicking = true;
+    requestAnimationFrame(() => {
+        measureStickyOffset();
+        measureTicking = false;
+    });
+};
 
 const tabs = [
     { id: 'about-us', label: 'About Us' },
@@ -151,11 +194,13 @@ const setupScrollSpy = () => {
 
 onMounted(() => {
     nextTick(() => {
+        measureStickyOffset();
         setupScrollSpy();
         landOnSection(routeToSection[route.name] || 'about-us');
     });
 
     resizeObserver = new ResizeObserver(() => {
+        scheduleMeasure();
         if (autoScrollTarget) {
             scrollToSection(autoScrollTarget);
         }
@@ -164,6 +209,8 @@ onMounted(() => {
 
     window.addEventListener('wheel', handleUserScrollIntent, { passive: true });
     window.addEventListener('touchmove', handleUserScrollIntent, { passive: true });
+    window.addEventListener('resize', scheduleMeasure, { passive: true });
+    window.addEventListener('scroll', scheduleMeasure, { passive: true });
 });
 
 watch(
@@ -180,5 +227,7 @@ onBeforeUnmount(() => {
     clearTimeout(autoScrollTimeout);
     window.removeEventListener('wheel', handleUserScrollIntent);
     window.removeEventListener('touchmove', handleUserScrollIntent);
+    window.removeEventListener('resize', scheduleMeasure);
+    window.removeEventListener('scroll', scheduleMeasure);
 });
 </script>
