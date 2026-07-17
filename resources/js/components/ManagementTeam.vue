@@ -27,16 +27,23 @@
                         {{ member.name }}
                     </div>
                     <div class="mt-1 pb-2 border-b" style="border-color: #a20d32;">
-                        <div
-                            v-for="role in member.roles"
-                            :key="role"
-                            class="text-xs font-semibold uppercase tracking-wide"
-                            style="color: #a20d32;"
-                        >
-                            {{ role }}
+                        <div v-for="role in member.roles" :key="role.short">
+                            <div
+                                class="text-xs font-semibold uppercase tracking-wide"
+                                style="color: #a20d32;"
+                            >
+                                {{ role.short }}
+                            </div>
+                            <div
+                                v-if="role.long"
+                                class="text-xs font-medium uppercase tracking-wide opacity-70"
+                                style="color: #a20d32;"
+                            >
+                                ({{ role.long }})
+                            </div>
                         </div>
                     </div>
-                    <p class="text-slate-700 text-sm leading-relaxed mt-3">
+                    <p class="text-slate-700 text-sm leading-relaxed mt-3 text-left">
                         {{ member.bio }}
                     </p>
                 </div>
@@ -53,25 +60,28 @@ const profileIcon = '/assets/icons/profile.svg';
 const team = [
     {
         name: 'Ghulam Ali Naveed',
-        roles: ['Founder', 'CEO'],
+        roles: [
+            { short: 'Founder' },
+            { short: 'CEO', long: 'Chief Executive Officer' },
+        ],
         image: '/assets/ghulam_ali_naveed.png',
         bio: 'Ghulam Ali Naveed - a Masters in Economics and Project Management, with 12 years of professional experience in the UAE. He founded Navsons to bring fresh, reliable grocery delivery to families across Islamabad and Rawalpindi, and as Founder and CEO, continues to guide the company\'s overall vision and long-term direction.',
     },
     {
         name: 'Muhammad Arslan Naveed',
-        roles: ['CMO'],
+        roles: [{ short: 'CMO', long: 'Chief Marketing Officer' }],
         image: '/assets/arslan.png',
-        bio: 'As Chief Marketing Officer, Arslan leads Navsons\' marketing and brand strategy, drawing on a background in software engineering to bring a technically-informed approach to growth. He drives customer engagement and brand presence as the company scales.',
+        bio: 'As CMO, Arslan leads Navsons\' marketing and brand strategy, drawing on a background in software engineering to bring a technically-informed approach to growth. He drives customer engagement and brand presence as the company scales.',
     },
     {
         name: 'Zain ul Abideen',
-        roles: ['COO'],
+        roles: [{ short: 'COO', long: 'Chief Operating Officer' }],
         image: '/assets/zain_ul_abideen.png',
-        bio: 'As Chief Operating Officer, Zain oversees the day-to-day running of Navsons — from order fulfilment to delivery — keeping operations smooth, consistent and dependable as the business continues to grow.',
+        bio: 'As COO, Zain oversees the day-to-day running of Navsons — from order fulfilment to delivery — keeping operations smooth, consistent and dependable as the business continues to grow.',
     },
     {
         name: 'Muhammad Taimoor Naveed',
-        roles: ['CTO'],
+        roles: [{ short: 'CTO', long: 'Chief Technology Officer' }],
         image: '/assets/my_picture.png',
         bio: 'A software engineer leading Navsons\' technology as CTO, Taimoor owns the e-commerce platform end-to-end while staying closely involved across operations, branding and marketing — making sure every part of the business runs on solid technical foundations.',
     },
