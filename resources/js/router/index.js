@@ -26,23 +26,19 @@ const Wishlist = () => import("../pages/Wishlist.vue");
 const MyProfile = () => import("../pages/MyProfile.vue");
 const ManageAddress = () => import("../pages/ManageAddress.vue");
 const Support = () => import("../pages/Support.vue");
-const TermsAndConditions = () => import("../pages/TermsAndConditions.vue");
-const PrivacyPolicy = () => import("../pages/PrivacyPolicy.vue");
 const AddNewAddress = () => import("../pages/AddNewAddress.vue");
 const EditAddress = () => import("../pages/EditAddress.vue");
-const AboutUs = () => import("../pages/AboutUs.vue");
 const ChangePassword = () => import("../pages/ChangePassword.vue");
 const BuyNow = () => import("../pages/BuyNow.vue");
 const MostPopular = () => import("../pages/MostPopular.vue");
-const ContactUs = () => import("../pages/ContactUs.vue");
 const BestDeal = () => import("../pages/BestDeal.vue");
 const Products = () => import("../pages/Products.vue");
 const Category = () => import("../pages/Category.vue");
 const SupportTicket = () => import("../pages/SupportTicket.vue");
 const SupportTicketDetails = () => import("../pages/SupportTicketDetails.vue");
 const FlashSale = () => import("../pages/FlashSale.vue");
-const Blog = () => import("../pages/Blog.vue");
 const BlogDetails = () => import("../pages/BlogDetails.vue");
+const CompanyInfo = () => import("../pages/CompanyInfo.vue");
 const PolicyPages = () => import("../pages/PolicyPages.vue");
 const Massages = () => import("../pages/Messages.vue");
 
@@ -271,7 +267,7 @@ const routes = [
     {
         path: "/terms-and-conditions",
         name: "terms-and-conditions",
-        component: TermsAndConditions,
+        component: CompanyInfo,
         meta: {
             layout: defaultLayout,
             title: "Terms & Conditions",
@@ -280,7 +276,7 @@ const routes = [
     {
         path: "/privacy-policy",
         name: "privacy-policy",
-        component: PrivacyPolicy,
+        component: CompanyInfo,
         meta: {
             layout: defaultLayout,
             title: "Privacy Policy",
@@ -289,7 +285,7 @@ const routes = [
     {
         path: "/about-us",
         name: "about-us",
-        component: AboutUs,
+        component: CompanyInfo,
         meta: {
             layout: defaultLayout,
             title: "About Us",
@@ -298,7 +294,7 @@ const routes = [
     {
         path: "/contact-us",
         name: "contact-us",
-        component: ContactUs,
+        component: CompanyInfo,
         meta: {
             layout: defaultLayout,
             title: "Contact Us",
@@ -307,9 +303,9 @@ const routes = [
     {
         path: "/blogs",
         name: "blogs",
-        component: Blog,
+        component: CompanyInfo,
         meta: {
-            layout: blogLayout,
+            layout: defaultLayout,
             title: "Blogs",
         },
     },
