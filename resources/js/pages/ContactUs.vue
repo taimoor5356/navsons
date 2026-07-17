@@ -1,7 +1,7 @@
 <template>
-    <div class="main-container">
+    <div class="max-w-[1000px] mx-auto px-[7.5px]">
 
-        <div class="max-w-7xl mx-auto py-6 md:py-8 lg:py-12">
+        <div class="max-w-none mx-auto py-6 md:py-8 lg:py-12">
 
             <div class="text-slate-950 text-lg sm:text-xl lg:text-3xl font-bold mb-2">
                 {{ $t("Can't find the answer you are looking for") }}?

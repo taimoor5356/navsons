@@ -1,5 +1,5 @@
 <template>
-    <div class="main-container pt-10 md:pt-14">
+    <div class="max-w-[1000px] mx-auto px-[7.5px] pt-10 md:pt-14">
         <SectionRibbon text="Management Team" />
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-6">
@@ -36,7 +36,7 @@
                             {{ role }}
                         </div>
                     </div>
-                    <p class="text-slate-500 text-sm leading-relaxed mt-3">
+                    <p class="text-slate-700 text-sm leading-relaxed mt-3">
                         {{ member.bio }}
                     </p>
                 </div>
@@ -55,7 +55,7 @@ const team = [
         name: 'Ghulam Ali Naveed',
         roles: ['Founder', 'CEO'],
         image: '/assets/ghulam_ali_naveed.png',
-        bio: 'Holding an MSc in Economics and with 12 years of professional experience in the UAE, Ghulam Ali founded Navsons to bring fresh, reliable grocery delivery to families across Islamabad and Rawalpindi. As Founder and CEO, he continues to guide the company\'s overall vision and long-term direction.',
+        bio: 'Ghulam Ali Naveed - a Masters in Economics and Project Management, with 12 years of professional experience in the UAE. He founded Navsons to bring fresh, reliable grocery delivery to families across Islamabad and Rawalpindi, and as Founder and CEO, continues to guide the company\'s overall vision and long-term direction.',
     },
     {
         name: 'Muhammad Arslan Naveed',

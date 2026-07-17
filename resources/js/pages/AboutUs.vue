@@ -1,5 +1,5 @@
 <template>
-    <div class="main-container py-6">
+    <div class="max-w-[1000px] mx-auto px-[7.5px] py-6">
         <div class="prose max-w-none w-full" v-html="content?.description"></div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-10">
@@ -12,7 +12,7 @@
                 <div class="font-bold mb-2" style="color: #a20d32;">
                     {{ feature.title }}
                 </div>
-                <p class="text-slate-500 text-sm leading-relaxed">
+                <p class="text-slate-700 text-sm leading-relaxed">
                     {{ feature.description }}
                 </p>
             </div>

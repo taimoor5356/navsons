@@ -1,5 +1,5 @@
 <template>
-    <div class="main-container pt-10 md:pt-14">
+    <div class="max-w-[1000px] mx-auto px-[7.5px] pt-10 md:pt-14">
         <SectionRibbon text="Key Divisions" />
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-6">
@@ -18,7 +18,7 @@
                     <div class="font-bold text-primary mb-2">
                         {{ division.title }}
                     </div>
-                    <p class="text-slate-500 text-sm leading-relaxed line-clamp-3">
+                    <p class="text-slate-700 text-sm leading-relaxed line-clamp-3">
                         {{ division.description }}
                     </p>
                     <RouterLink

@@ -3,7 +3,7 @@
         <BlogHeader :categories="categories" :isLoading="isLoadingCategory" :categoryId="categoryID"
             @changeCategory="changeCategory" />
 
-        <div class="main-container py-4 pb-8 md:pb-12">
+        <div class="max-w-[1000px] mx-auto px-[7.5px] py-4 pb-8 md:pb-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-6 items-start">
                 <BlogCard v-if="!isLoading" v-for="blog in blogs" :key="blog.id" :blog="blog" />
 

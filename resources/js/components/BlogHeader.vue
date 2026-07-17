@@ -1,5 +1,5 @@
 <template>
-    <div class="main-container py-4 sm:py-6 bg-slate-100 mt-[25px]">
+    <div class="max-w-[1000px] mx-auto px-[7.5px] py-4 sm:py-6 bg-slate-100 mt-[25px]">
         <div class="w-full p-3 sm:p-6 bg-white rounded-md md:rounded-2xl">
             <div v-if="!isLoading">
                 <div class="text-slate-800 text-lg sm:text-xl md:text-3xl font-bold">

@@ -6,14 +6,14 @@
             class="sticky z-10 bg-white border-b border-slate-200 shadow-sm"
             :style="{ top: tabBarOffset + 'px' }"
         >
-            <div class="main-container">
-                <div class="flex flex-wrap justify-between items-center">
+            <div class="max-w-[1000px] mx-auto px-[7.5px]">
+                <div class="flex flex-wrap items-center">
                     <button
                         v-for="tab in tabs"
                         :key="tab.id"
                         type="button"
                         @click="handleTabClick(tab.id)"
-                        class="px-5 py-3.5 text-sm md:text-base font-medium whitespace-nowrap transition-colors"
+                        class="flex-1 px-5 py-3.5 text-sm md:text-base font-medium whitespace-nowrap text-center transition-colors"
                         :class="activeTab === tab.id
                             ? 'bg-primary text-white'
                             : 'text-slate-600 hover:bg-slate-50'"
@@ -25,7 +25,7 @@
         </div>
 
         <section id="about-us" :style="{ scrollMarginTop: sectionScrollOffset + 'px' }">
-            <div class="main-container pt-8 md:pt-10">
+            <div class="max-w-[1000px] mx-auto px-[7.5px] pt-8 md:pt-10">
                 <SectionRibbon text="About Us" />
             </div>
             <AboutUs />
@@ -34,28 +34,28 @@
         </section>
 
         <section id="blogs" :style="{ scrollMarginTop: sectionScrollOffset + 'px' }">
-            <div class="main-container pt-8 md:pt-10">
+            <div class="max-w-[1000px] mx-auto px-[7.5px] pt-8 md:pt-10">
                 <SectionRibbon text="Blogs" />
             </div>
             <Blog />
         </section>
 
         <section id="contact-us" :style="{ scrollMarginTop: sectionScrollOffset + 'px' }">
-            <div class="main-container pt-8 md:pt-10">
+            <div class="max-w-[1000px] mx-auto px-[7.5px] pt-8 md:pt-10">
                 <SectionRibbon text="Contact Us" />
             </div>
             <ContactUs />
         </section>
 
         <section id="terms-and-conditions" :style="{ scrollMarginTop: sectionScrollOffset + 'px' }">
-            <div class="main-container pt-8 md:pt-10">
+            <div class="max-w-[1000px] mx-auto px-[7.5px] pt-8 md:pt-10">
                 <SectionRibbon text="Terms & Conditions" />
             </div>
             <TermsAndConditions />
         </section>
 
         <section id="privacy-policy" :style="{ scrollMarginTop: sectionScrollOffset + 'px' }">
-            <div class="main-container pt-8 md:pt-10">
+            <div class="max-w-[1000px] mx-auto px-[7.5px] pt-8 md:pt-10">
                 <SectionRibbon text="Privacy Policy" />
             </div>
             <PrivacyPolicy />

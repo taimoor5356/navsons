@@ -1,6 +1,6 @@
 <template>
-    <div class="main-container py-8 md:py-12">
-        <div class="max-w-3xl mx-auto">
+    <div class="max-w-[1000px] mx-auto px-[7.5px] py-8 md:py-12">
+        <div class="w-full">
             <div class="flex justify-center gap-2 mb-6 mt-6">
                 <button
                     type="button"
