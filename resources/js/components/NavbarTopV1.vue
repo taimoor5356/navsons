@@ -56,7 +56,7 @@
                         leave-to-class="transform opacity-0 scale-95"
                     >
                         <MenuItems
-                            class="absolute z-50 w-56 mt-1 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-96 overflow-y-auto"
+                            class="absolute z-50 w-56 mt-[0.65rem] origin-top-right rounded-none bg-white shadow-lg focus:outline-none max-h-96 overflow-y-auto"
                             :class="
                                 master.langDirection == 'rtl'
                                     ? 'left-0'
@@ -74,7 +74,7 @@
                                         class="block w-full text-left"
                                         :class="[
                                             active
-                                                ? 'text-primary'
+                                                ? 'text-primary font-bold'
                                                 : 'text-gray-700',
                                             'block px-4 py-[7.5px] text-xs',
                                         ]"
