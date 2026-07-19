@@ -107,7 +107,7 @@
                         <MenuButton
                             class="flex justify-between items-center text-white gap-2 text-xs md:text-sm font-normal leading-tight"
                         >
-                            <img :src="currentLanguage.flag" alt="flag"  class="w-5 h-4">
+                            <span class="uppercase font-semibold">{{ currentLanguage?.name }}</span>
                             <ChevronDownIcon
                                 class="w-4 h-4 "
                                 aria-hidden="true"
@@ -124,7 +124,7 @@
                         leave-to-class="transform opacity-0 scale-95"
                     >
                         <MenuItems
-                            class="absolute z-50 w-24 mt-1 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                            class="absolute z-50 w-20 mt-1 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                             :class="
                                 master.langDirection == 'rtl'
                                     ? 'left-0'
@@ -143,17 +143,15 @@
                                             setCurrentLanguage(language.name);
                                             reloadPage();
                                         "
-                                        class="w-full text-left"
+                                        class="w-full text-left uppercase font-semibold"
                                         :class="[
                                             active
                                                 ? 'bg-gray-100 text-gray-900'
                                                 : 'text-gray-700',
-                                            'flex justify-between items-center px-4 py-2 text-xs',
+                                            'px-4 py-2 text-xs',
                                         ]"
                                     >
-
-                                        <img :src="language.flag" alt="flag"  class="w-5">
-                                        {{ language.title }}
+                                        {{ language.name }}
                                     </button>
                                 </MenuItem>
                             </div>
