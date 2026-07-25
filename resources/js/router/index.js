@@ -53,7 +53,6 @@ const routes = [
         component: Home,
         meta: {
             layout: defaultLayout,
-            title: "Home",
         },
     },
     {
@@ -358,7 +357,9 @@ router.beforeEach((to, from, next) => {
     const master = useMaster();
     const appName = master.appName;
 
-    document.title = to.meta.title ? `${to.meta.title} - ${appName}` : appName;
+    document.title = to.name === "home"
+        ? "Navsons | Fresh Fruits, Vegetables, Meat and Grocery Delivery."
+        : (to.meta.title ? `${to.meta.title} - ${appName}` : appName);
     next();
 });
 
