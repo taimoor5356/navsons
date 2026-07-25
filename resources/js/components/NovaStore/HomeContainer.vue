@@ -36,7 +36,6 @@
         <div class="border-b border-slate-100">
             <FullWidthBannerCarousel />
         </div>
-
         <div v-if="incomingFlashSale.length > 0" class="border-b border-slate-100">
             <FlashSaleIncoming
                 v-for="incomingFlash in incomingFlashSale"
