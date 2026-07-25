@@ -24,7 +24,7 @@
     <meta name="base-url" content="{{ url('/') }}">
     <meta name="app-url" content="{{ url('/') }}">
 
-    <title>{{ $title }}</title>
+    <title>Navsons | Fresh Fruits, Vegetables, Meat and Grocery Delivery</title>
     <meta name="description" content="{{ $description }}" />
     <meta name="keywords" content="Navsons, Navsons Islamabad, Navsons Pakistan, Navsons online, Navsons delivery, fresh fruits Islamabad, fresh vegetables Islamabad, fresh meat Islamabad, halal meat Islamabad, online grocery Islamabad, grocery delivery Islamabad, fresh food delivery Islamabad, buy fresh fruits online Islamabad, buy fresh meat online Pakistan, organic food Islamabad, fresh fruits home delivery Islamabad, same day grocery delivery Islamabad, hormone free meat Islamabad, farm fresh vegetables Islamabad, grocery delivery DHA, fresh fruits Bahria Town Islamabad, online grocery Pakistan, fresh meat delivery Rawalpindi, grocery shopping Islamabad online, organic fruits Pakistan, premium meat Islamabad, fresh produce delivery Pakistan, quality groceries Islamabad" />
     <meta name="robots" content="index, follow" />
