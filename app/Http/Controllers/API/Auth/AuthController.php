@@ -27,14 +27,6 @@ class AuthController extends Controller
     public function register(RegistrationRequest $request)
     {
         // Create a new user
-        $oldUser = UserRepository::query()->where('phone', $request->phone)->orWhere('email', $request->email)->first();
-        if ($oldUser) {
-           $user = UserRepository::registerGuestUser($request, $oldUser);
-            return $this->json('Registration successfully complete', [
-                'user' => new UserResource($user),
-                'access' => UserRepository::getAccessToken($user),
-            ]);
-        }
         $user = UserRepository::registerNewUser($request);
 
         if ($request->device_key) {

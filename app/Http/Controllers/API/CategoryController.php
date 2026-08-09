@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryBannerResource;
 use App\Http\Resources\CategoryResource;
+use App\Repositories\CategoryBannerRepository;
 use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
@@ -21,7 +23,7 @@ class CategoryController extends Controller
         $perPage = $request->per_page;
         $skip = ($page * $perPage) - $perPage;
 
-        $categories = CategoryRepository::query()->whereNull('parent_id')->active()->latest('id');
+        $categories = CategoryRepository::query()->whereNull('parent_id')->active()->orderBy('id', 'asc');
 
         $total = $categories->count();
 
@@ -31,24 +33,8 @@ class CategoryController extends Controller
 
         return $this->json('categories', [
             'total' => $total,
-            'categories' => $this->formatCategoryTree($categories),
+            'categories' => CategoryResource::collection($categories),
         ]);
-    }
-
-    private function formatCategoryTree($categories)
-    {
-        $array = [];
-        foreach ($categories as $category) {
-            $array[] = [
-                'id' => $category->id,
-                'name' => $category->name,
-                'thumbnail' => $category->thumbnail,
-                'total_products' => $category->products()->isActive()->count(),
-                'sub_categories' => $this->formatCategoryTree($category->subCategories()->active()->get()),
-            ];
-        }
-
-        return $array;
     }
 
      public function getCategoryAttributes(Request $request)
@@ -65,6 +51,18 @@ class CategoryController extends Controller
 
         return $this->json('attributes', [
             'attributes' => $this->formatCategoryAttributeTree($attributes),
+        ]);
+    }
+
+    public function getCategoryBanners(Request $request)
+    {
+        $banners = CategoryBannerRepository::query()
+            ->where('category_id', $request->category_id)
+            ->active()
+            ->get();
+
+        return $this->json('category banners', [
+            'banners' => CategoryBannerResource::collection($banners),
         ]);
     }
 

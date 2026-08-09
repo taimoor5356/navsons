@@ -6,6 +6,7 @@ use Abedin\Maker\Repositories\Repository;
 use App\Enums\Roles;
 use App\Models\Media;
 use App\Models\User;
+use App\Support\PhoneNumber;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -33,12 +34,12 @@ class UserRepository extends Repository
      */
     public static function findByPhone($phone)
     {
-        return self::query()->where('phone', $phone)->orWhere('email', $phone)->first();
+        return self::query()->where('phone', PhoneNumber::normalize($phone))->orWhere('email', $phone)->first();
     }
 
     public static function findByContact($contact)
     {
-        return self::query()->where('phone', $contact)
+        return self::query()->where('phone', PhoneNumber::normalize($contact))
             ->orWhere('email', $contact)
             ->first();
     }
@@ -53,6 +54,8 @@ class UserRepository extends Repository
      */
     public static function socialAuthCheckOrCreate($request, $provider)
     {
+        $normalizedPhone = PhoneNumber::normalize($request['phone']);
+
         if (! $request['email'] && ! $request['phone']) {
             $user = self::query()->where('auth_type', $provider)->where('auth_id', $request['id'])->first();
             if ($user) {
@@ -62,8 +65,8 @@ class UserRepository extends Repository
 
         $user = self::query()->where('auth_type', $provider)
             ->where('email', $request['email'])
-            ->when(! empty($request['phone']), function ($query) use ($request) {
-                $query->orWhere('phone', $request['phone']);
+            ->when(! empty($request['phone']), function ($query) use ($normalizedPhone) {
+                $query->orWhere('phone', $normalizedPhone);
             })->first();
 
         if ($user) {
@@ -90,7 +93,7 @@ class UserRepository extends Repository
         $user = self::create([
             'name' => $request['name'],
             'email' => $request['email'],
-            'phone' => $request['phone'],
+            'phone' => $normalizedPhone,
             'auth_type' => $provider,
             'auth_id' => $request['id'],
             'gender' => $request['gender'],
@@ -128,7 +131,7 @@ class UserRepository extends Repository
         return self::create([
             'name' => $request->first_name ?? $request->name,
             'last_name' => $request->last_name,
-            'phone' => $request->phone,
+            'phone' => PhoneNumber::normalize($request->phone),
             'email' => $request->email,
             'password' => Hash::make($request->password ?? ''),
             'media_id' => $thumbnail ? $thumbnail->id : null,
@@ -155,7 +158,7 @@ class UserRepository extends Repository
             'name' => $request->first_name ?? $request->name,
             'last_name' => $request->last_name,
             'email' => $request->email,
-            'phone' => $request->phone,
+            'phone' => PhoneNumber::normalize($request->phone),
             'gender' => $request->gender,
             'password' => Hash::make($request->password ?? $request->phone),
             'media_id' => $thumbnail ? $thumbnail->id : null,
@@ -201,7 +204,7 @@ class UserRepository extends Repository
             'name' => $name,
             'last_name' => $request->last_name,
             'email' => $request->email,
-            'phone' => $request->phone,
+            'phone' => PhoneNumber::normalize($request->phone),
             'media_id' => $thumbnail ? $thumbnail->id : null,
             'gender' => $request->gender,
             'date_of_birth' => $request->date_of_birth ? Carbon::parse($request->date_of_birth)->format('Y-m-d') : $user->date_of_birth,
@@ -238,24 +241,6 @@ class UserRepository extends Repository
         }
 
         return $thumbnail;
-    }
-
-
-     public static function registerGuestUser(Request $request ,User $user)
-    {
-         $user->update([
-            'name' => $request->first_name ?? $request->name,
-            'last_name' => $request->last_name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'gender' => $request->gender,
-            'date_of_birth' => $request->date_of_birth ?? null,
-            'country' => $request->country,
-            'phone_code' => $request->phone_code,
-            'is_active' => true,
-        ]);
-        return $user;
     }
 
 }

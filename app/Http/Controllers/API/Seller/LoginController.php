@@ -22,6 +22,7 @@ use App\Http\Requests\CreatePasswordRequest;
 use App\Repositories\NotificationRepository;
 use App\Http\Requests\CheckEmailPhoneRequest;
 use App\Repositories\VerificationCodeRepository;
+use App\Support\PhoneNumber;
 
 class LoginController extends Controller
 {
@@ -30,6 +31,7 @@ class LoginController extends Controller
      */
     public function checkUserStatus(Request $request)
     {
+        $request->merge(['phone' => PhoneNumber::normalize($request->phone)]);
         $request->validate(['phone' => 'nullable|numeric|exists:users,phone']);
 
         $user = UserRepository::findByContact($request->phone);
@@ -258,6 +260,12 @@ class LoginController extends Controller
         if($shop){
            $shop->delete();
         }
+
+        $delTime = now()->format('YmdHis');
+        $user->update([
+            'phone' => $user->phone.'_deleted:'.$delTime,
+            'email' => $user->email ? $user->email.'_deleted:'.$delTime : $user->email,
+        ]);
         $user->delete();
         return $this->json('Delete Account Successfully!');
     }

@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ReviewsController;
 use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CategoryBannerController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\FirebaseController;
@@ -85,6 +86,17 @@ Route::name('admin.')->group(function () {
             Route::put('/promotional-banner/{banner}/update', 'update')->name('banner.update');
             Route::get('/promotional-banner/{banner}/toggle', 'statusToggle')->name('banner.toggle');
             Route::get('/promotional-banner/{banner}/destroy', 'destroy')->name('banner.destroy');
+        });
+
+        // category banner
+        Route::controller(CategoryBannerController::class)->group(function () {
+            Route::get('/category-banners', 'index')->name('categoryBanner.index');
+            Route::get('/category-banner/create', 'create')->name('categoryBanner.create');
+            Route::post('/category-banner/store', 'store')->name('categoryBanner.store');
+            Route::get('/category-banner/{categoryBanner}/edit', 'edit')->name('categoryBanner.edit');
+            Route::put('/category-banner/{categoryBanner}/update', 'update')->name('categoryBanner.update');
+            Route::get('/category-banner/{categoryBanner}/toggle', 'statusToggle')->name('categoryBanner.toggle');
+            Route::get('/category-banner/{categoryBanner}/destroy', 'destroy')->name('categoryBanner.destroy');
         });
 
         // ads routes

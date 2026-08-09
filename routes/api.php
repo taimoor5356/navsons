@@ -99,6 +99,7 @@ Route::controller(VendorController::class)->group(function () {
 Route::controller(CategoryController::class)->group(function () {
     Route::get('/categories', 'index');
     Route::get('/category/{category_id}/attributes', 'getCategoryAttributes');
+    Route::get('/category/{category_id}/banners', 'getCategoryBanners');
 });
 
 

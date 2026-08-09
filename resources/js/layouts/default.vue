@@ -3,6 +3,13 @@
         <NavbarTopContainer :themeName="master.themeName"/>
         <Navbar :themeName="master.themeName"/>
 
+        <div
+            v-if="master.themeName == 'NovaStore' && !route.meta.hideCategoryBar"
+            class="border-b border-slate-100"
+        >
+            <CategoryShortcuts :categories="master.categories" :isLoading="isLoadingCategories" />
+        </div>
+
         <div class="flex-grow">
             <slot />
         </div>
@@ -19,20 +26,44 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import axios from "axios";
 import NavbarTopContainer from "../components/NavbarTopContainer.vue";
 import Navbar from "../components/Navbar.vue";
 import BasketCard from "../components/BasketCard.vue";
 import MobileBottomNav from "../components/MobileBottomNav.vue";
+import CategoryShortcuts from "../components/NovaStore/CategoryShortcuts.vue";
 
 import { useMaster } from "../stores/MasterStore";
 import ScrollToTopBtn from "../components/ScrollToTopBtn.vue";
 import FooterContainer from "../components/FooterContainer.vue";
 
 const master = useMaster();
+const route = useRoute();
+
+const isLoadingCategories = ref(true);
+
+const fetchCategories = () => {
+    if (master.categories.length > 0) {
+        isLoadingCategories.value = false;
+        return;
+    }
+
+    isLoadingCategories.value = true;
+    axios
+        .get("/categories")
+        .then((response) => {
+            master.categories = response.data.data.categories;
+        })
+        .finally(() => {
+            isLoadingCategories.value = false;
+        });
+};
 
 onMounted(() => {
     master.fetchData();
+    fetchCategories();
     window.scrollTo(0, 0);
     setupThemeColors();
     setDirection();

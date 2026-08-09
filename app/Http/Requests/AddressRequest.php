@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\VerifyManage;
+use App\Support\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Cache;
 
@@ -14,6 +15,17 @@ class AddressRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    /**
+     * Normalize the phone number before validation so "03001234567",
+     * "3001234567" and "+923001234567" are all treated as the same number.
+     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->filled('phone')) {
+            $this->merge(['phone' => PhoneNumber::normalize($this->phone)]);
+        }
     }
 
     /**

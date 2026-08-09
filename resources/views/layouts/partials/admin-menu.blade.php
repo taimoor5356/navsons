@@ -809,10 +809,10 @@
     </li>
 @endhasPermission
 
-@hasPermission(['admin.banner.index', 'admin.themeColor.index'])
+@hasPermission(['admin.banner.index', 'admin.categoryBanner.index', 'admin.themeColor.index'])
     <!--- Settings --->
     <li>
-        <a class="menu {{ request()->routeIs('admin.banner.*', 'admin.themeColor.*', 'admin.offerBanner.*') ? 'active' : '' }}"
+        <a class="menu {{ request()->routeIs('admin.banner.*', 'admin.categoryBanner.*', 'admin.themeColor.*', 'admin.offerBanner.*') ? 'active' : '' }}"
             data-bs-toggle="collapse" href="#appearance">
             <span>
                 <img class="menu-icon" src="{{ asset('assets/icons-admin/palette.svg') }}" alt="icon"
@@ -821,13 +821,19 @@
             </span>
             <img src="{{ asset('assets/icons-admin/caret-down.svg') }}" alt="" class="downIcon">
         </a>
-        <div class="collapse dropdownMenuCollapse {{ $request->routeIs('admin.banner.*', 'admin.themeColor.*', 'admin.offerBanner.*') ? 'show' : '' }}"
+        <div class="collapse dropdownMenuCollapse {{ $request->routeIs('admin.banner.*', 'admin.categoryBanner.*', 'admin.themeColor.*', 'admin.offerBanner.*') ? 'show' : '' }}"
             id="appearance">
             <div class="listBar">
                 @hasPermission('admin.banner.index')
                     <a href="{{ route('admin.banner.index') }}"
                         class="subMenu {{ request()->routeIs('admin.banner.*') ? 'active' : '' }}">
                         {{ __('Promotional Banner') }}
+                    </a>
+                @endhasPermission
+                @hasPermission('admin.categoryBanner.index')
+                    <a href="{{ route('admin.categoryBanner.index') }}"
+                        class="subMenu {{ request()->routeIs('admin.categoryBanner.*') ? 'active' : '' }}">
+                        {{ __('Category Banner') }}
                     </a>
                 @endhasPermission
                 @hasPermission('admin.themeColor.index')

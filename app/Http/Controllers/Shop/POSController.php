@@ -23,6 +23,7 @@ use App\Http\Requests\PosCartRequest;
 use App\Repositories\OrderRepository;
 use App\Repositories\VatTaxRepository;
 use App\Http\Resources\ProductResource;
+use App\Support\PhoneNumber;
 use App\Repositories\PosCartRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\CustomerRepository;
@@ -165,6 +166,8 @@ class POSController extends Controller
 
     public function storeCustomer(Request $request)
     {
+        $request->merge(['phone' => PhoneNumber::normalize($request->phone)]);
+
         $request->validate([
             'first_name' => 'required|string|max:200',
             'last_name' => 'nullable|string|max:200',

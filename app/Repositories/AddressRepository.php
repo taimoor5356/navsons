@@ -8,6 +8,7 @@ use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Models\CartAccessToken;
 use App\Http\Requests\AddressRequest;
+use App\Support\PhoneNumber;
 use Abedin\Maker\Repositories\Repository;
 
 class AddressRepository extends Repository
@@ -87,6 +88,7 @@ class AddressRepository extends Repository
 
     public static function storeByGuestUser(Request $request): Address
     {
+        $request->merge(['phone' => PhoneNumber::normalize($request->phone)]);
 
         $user = UserRepository::query()->where('phone', $request->phone)->orWhere('email', $request->email)->first();
         $tokens = cartAccessToken(request());
@@ -95,11 +97,6 @@ class AddressRepository extends Repository
                 $user->customer?->addresses()->update(['is_default' => false]);
             }
             CartAccessToken::where('access_token', $tokens['access_token'])->update(['customer_id' => $user->customer->id]);
-            $user->update([
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'email' => $request->email,
-            ]);
 
             return Address::updateOrCreate(
                 [

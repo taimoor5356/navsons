@@ -1,285 +1,86 @@
 <template>
     <div>
-        <div class="main-container py-4 bg-slate-100 mt-[25px]">
-            <!-- Flash Sale Banner -->
-            <!-- <div class="p-3 xl:p-6 flex-col sm:flex-row justify-center items-center gap-1 sm:gap-8 flex rounded-xl mb-3"
-                style="background: linear-gradient(90deg, #8B5CF6 0%, #C622FF 36.81%, #5C87F6 75.35%, #8B5CF6 100%);">
-
-                <div class="text-center text-white sm:text-3xl font-bold sm:leading-9">
-                    Deal of the Day
-                </div>
-
-                <div class="flex justify-center items-center gap-2 xl:gap-4">
-                    <div class="text-center text-white text-lg font-normal leading-7 tracking-tight">Ending in</div>
-
-                    Time counter
-                    <div class="flex justify-center items-center gap-2 text-white">
-                        <div class="w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full justify-center items-center flex">
-                            <span class="text-primary text-lg font-medium">06</span>
-                        </div>:
-                        <div class="w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full justify-center items-center flex">
-                            <span class="text-primary text-lg font-medium">42</span>
-                        </div>:
-                        <div class="w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full justify-center items-center flex">
-                            <span class="text-primary text-lg font-medium">19</span>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-            <div
-                v-if="!isLoading"
-                class="w-full p-2 sm:p-4 bg-white rounded-lg sm:rounded-xl md:rounded-2xl flex gap-3 md:gap-6 items-center justify-between"
-            >
-                <!-- Back -->
-                <router-link
-                    to="/"
-                    class="py-2 flex gap-1 sm:gap-2 items-center justify-center"
-                >
-                    <ArrowLeftIcon
-                        class="w-4 h-4 sm:w-6 sm:h-6 text-slate-600"
-                    />
-                    <div
-                        class="text-slate-600 text-sm sm:text-base font-normal leading-normal"
-                    >
-                        {{ $t("Back") }}
-                    </div>
-                </router-link>
-
-                <!-- Categories slider -->
-                <div class="grow overflow-x-auto">
-                    <swiper
-                        :slidesPerView="'auto'"
-                        :spaceBetween="16"
-                        class="categorySwiper"
-                    >
-                        <swiper-slide>
-                            <div
-                                class="p-2 sm:px-4 sm:py-3 rounded-md sm:rounded-[10px] border text-base font-normal leading-normal hover:text-primary cursor-pointer transition duration-300"
-                                :class="
-                                    !route.query.subcategory
-                                        ? 'text-primary border-primary'
-                                        : 'border-slate-200 text-slate-600'
-                                "
-                                @click="
-                                    $router.push(
-                                        `/categories/${route.params.slug}`
-                                    )
-                                "
-                            >
-                                {{ $t("All") }}
-                            </div>
-                        </swiper-slide>
-
-                        <swiper-slide
-                            v-for="subcategory in subcategories"
-                            :key="subcategory.id"
-                        >
-                            <div
-                                class="p-2 sm:px-4 sm:py-3 rounded-md sm:rounded-[10px] border text-base font-normal leading-normal hover:text-primary cursor-pointer transition duration-300"
-                                :class="
-                                    subcategory.id == route.query.subcategory
-                                        ? 'text-primary border-primary'
-                                        : 'border-slate-200 text-slate-600'
-                                "
-                                @click="
-                                    $router.push(
-                                        `/categories/${route.params.slug}?subcategory=${subcategory.id}`
-                                    )
-                                "
-                            >
-                                {{ subcategory.name }}
-                            </div>
-                        </swiper-slide>
-                    </swiper>
-                </div>
-
-                <!-- Filter button -->
-                <div>
-                    <button
-                        class="p-2 sm:px-4 sm:py-3 rounded-md sm:rounded-[10px] justify-center items-center gap-2 inline-flex text-sm sm:text-base font-normal leading-normal border-0 outline-none hover:text-primary transition duration-300"
-                        :class="
-                            hasFilter
-                                ? ' bg-primary-200 text-primary'
-                                : 'text-slate-600 bg-slate-200'
-                        "
-                        @click="showFilterCanvas = true"
-                    >
-                        <FunnelIcon class="w-4 h-4 sm:w-6 sm:h-6" />
-                        <div class="grow shrink basis-0">
-                            {{ $t("Filter") }}
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <!-- loading -->
-            <div
-                v-else
-                class="w-full p-2 md:p-4 bg-white rounded-lg sm:rounded-xl md:rounded-2xl flex gap-3 md:gap-6 items-center justify-between"
-            >
-                <SkeletonLoader
-                    v-for="i in 2"
-                    class="w-24 sm:w-32 md:w-72 lg:w-96 h-12 rounded"
+        <div
+            v-if="master.themeName == 'NovaStore'"
+            class="main-container pb-2 pt-4 !px-4 lg:flex lg:items-stretch lg:gap-3 border-b border-slate-100"
+        >
+            <div v-if="topCategoryBanner" class="col-span-4 lg:col-span-3 lg:flex-1 lg:min-w-0">
+                <img
+                    :src="topCategoryBanner.image"
+                    loading="lazy"
+                    class="w-full object-contain rounded-lg lg:h-[350px] lg:object-cover"
                 />
             </div>
+
+            <PartnerBrands />
         </div>
 
-        <div class="main-container py-12">
-            <div
-                class="grid grid-cols-1 gap-6 items-start"
-                :class="
-                    master.themeName == 'UltraMart'
-                        ? 'xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
-                        : 'xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6'
-                "
-            >
-                <div
-                    v-if="!isLoading"
-                    v-for="product in products"
-                    :key="product.id"
-                    class="w-full"
+        <div class="main-container py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 items-start">
+                <!-- Filter Sidebar (permanent) -->
+                <aside
+                    class="w-full lg:sticky lg:top-24 bg-white rounded-lg sm:rounded-xl overflow-hidden border border-slate-100"
                 >
-                    <ProductCardToggler :productData="product" />
-                </div>
-
-                <!-- loading -->
-                <div v-else v-for="i in 12" :key="i">
-                    <SkeletonLoader
-                        class="w-full h-[220px] sm:h-[330px] rounded-lg"
-                    />
-                </div>
-            </div>
-            <div
-                v-if="products.length == 0 && !isLoading"
-                class="flex justify-center items-center w-full mt-8"
-            >
-                <div
-                    class="text-slate-800 text-base font-normal leading-normal"
-                >
-                    {{ $t("No products found") }}
-                </div>
-            </div>
-
-            <!-- Pagination -->
-            <div
-                v-if="products.length > 0 && !isLoading"
-                class="flex justify-between items-center w-full mt-8 gap-4 flex-wrap"
-            >
-                <div
-                    class="text-slate-800 text-base font-normal leading-normal"
-                >
-                    {{ $t("Showing") }} {{ perPage * (currentPage - 1) + 1 }} to
-                    {{ perPage * (currentPage - 1) + products.length }}
-                    {{ $t("of") }} {{ totalProducts }} {{ $t("results") }}
-                </div>
-                <div>
-                    <vue-awesome-paginate
-                        :total-items="totalProducts"
-                        :items-per-page="perPage"
-                        type="button"
-                        :max-pages-shown="5"
-                        v-model="currentPage"
-                        :hide-prev-next-when-ends="true"
-                        @click="onClickHandler"
-                    />
-                </div>
-            </div>
-        </div>
-
-        <!-- Filter Canvas Drawer -->
-        <TransitionRoot as="template" :show="showFilterCanvas">
-            <Dialog
-                as="div"
-                class="relative z-50"
-                @close="showFilterCanvas = false"
-            >
-                <TransitionChild
-                    as="template"
-                    enter="ease-in-out duration-500"
-                    enter-from="opacity-0"
-                    enter-to="opacity-100"
-                    leave="ease-in-out duration-500"
-                    leave-from="opacity-100"
-                    leave-to="opacity-0"
-                >
-                    <div
-                        class="fixed inset-0 bg-gray-500 bg-opacity-30 transition-opacity"
-                    />
-                </TransitionChild>
-
-                <div class="fixed inset-0 overflow-hidden">
-                    <div class="absolute inset-0 overflow-hidden">
+                    <div class="max-h-[calc(100vh-7rem)] overflow-y-auto scrollbar-hide">
                         <div
-                            class="pointer-events-none fixed inset-y-0 flex max-w-full"
-                            :class="
-                                master.langDirection == 'rtl'
-                                    ? 'left-0 sm:pr-10'
-                                    : 'right-0 sm:pl-10'
-                            "
+                            class="flex justify-between items-center p-4 px-6 sticky top-0 z-10 bg-neutral-100"
                         >
-                            <TransitionChild
-                                as="template"
-                                enter="transform transition ease-in-out duration-500 sm:duration-700"
-                                :enter-from="
-                                    master.langDirection == 'rtl'
-                                        ? '-translate-x-full'
-                                        : 'translate-x-full'
-                                "
-                                enter-to="translate-x-0"
-                                leave="transform transition ease-in-out duration-500 sm:duration-700"
-                                leave-from="translate-x-0"
-                                :leave-to="
-                                    master.langDirection == 'rtl'
-                                        ? '-translate-x-full'
-                                        : 'translate-x-full'
-                                "
+                            <div
+                                class="text-zinc-900 text-xl font-semibold leading-loose font-['Poppins']"
                             >
-                                <DialogPanel
-                                    class="pointer-events-auto relative w-screen max-w-md"
-                                >
-                                    <TransitionChild
-                                        as="template"
-                                        enter="ease-in-out duration-500"
-                                        enter-from="opacity-0"
-                                        enter-to="opacity-100"
-                                        leave="ease-in-out duration-500"
-                                        leave-from="opacity-100"
-                                        leave-to="opacity-0"
-                                    >
-                                        <div
-                                            class="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4"
-                                        ></div>
-                                    </TransitionChild>
-                                    <div
-                                        class="flex h-full flex-col justify-between overflow-hidden rounded-lg rounded-tr-none rounded-br-none bg-white shadow-xl"
-                                    >
-                                        <div
-                                            class="overflow-y-scroll scrollbar-hide"
-                                        >
-                                            <div
-                                                class="flex justify-between items-center p-4 px-6 sticky top-0 right-0 z-10 bg-neutral-100"
-                                            >
-                                                <div
-                                                    class="text-zinc-900 text-2xl font-semibold leading-loose font-['Poppins']"
-                                                >
-                                                    {{ $t("Filter") }}
-                                                </div>
-                                                <button
-                                                    class="w-8 h-8 flex justify-center items-center bg-slate-100 rounded-full"
-                                                    @click="
-                                                        showFilterCanvas = false
-                                                    "
-                                                >
-                                                    <XMarkIcon
-                                                        class="w-5 h-5 text-slate-700"
-                                                    />
-                                                </button>
-                                            </div>
+                                {{ $t("Filter") }}
+                            </div>
+                        </div>
 
-                                            <div
-                                                class="flex flex-col gap-4 p-4 px-6"
-                                            >
+                        <div
+                            class="flex flex-col gap-4 p-4 px-6"
+                        >
+                            <!-- Subcategory -->
+                            <div
+                                class="border-b border-gray-100 pb-4"
+                            >
+                                <p
+                                    class="justify-center text-zinc-900 text-lg font-medium font-['Poppins'] leading-relaxed mb-3"
+                                >
+                                    {{ $t("Subcategory") }}
+                                </p>
+
+                                <div class="flex flex-col gap-3">
+                                    <div
+                                        class="cursor-pointer text-sm font-normal leading-normal transition duration-300"
+                                        :class="
+                                            !route.query.subcategory
+                                                ? 'text-primary font-medium'
+                                                : 'text-slate-600 hover:text-primary'
+                                        "
+                                        @click="
+                                            $router.push(
+                                                `/categories/${route.params.slug}`
+                                            )
+                                        "
+                                    >
+                                        {{ $t("All") }}
+                                    </div>
+
+                                    <div
+                                        v-for="subcategory in subcategories"
+                                        :key="subcategory.id"
+                                        class="cursor-pointer text-sm font-normal leading-normal transition duration-300"
+                                        :class="
+                                            subcategory.id == route.query.subcategory
+                                                ? 'text-primary font-medium'
+                                                : 'text-slate-600 hover:text-primary'
+                                        "
+                                        @click="
+                                            $router.push(
+                                                `/categories/${route.params.slug}?subcategory=${subcategory.id}`
+                                            )
+                                        "
+                                    >
+                                        {{ subcategory.name }}
+                                    </div>
+                                </div>
+                            </div>
                                                 <!-- price range -->
                                                 <div
                                                     class="border-b border-gray-100 pb-4 space-y-4"
@@ -874,7 +675,7 @@
 
                                         <!-- button Clear and Apply -->
                                         <div
-                                            class="flex gap-6 p-6 border-t border-slate-200"
+                                            class="flex gap-6 p-4 px-6 border-t border-slate-200"
                                         >
                                             <button
                                                 class="grow px-4 py-3 rounded-[10px] border border-primary text-primary text-base font-medium leading-normal"
@@ -889,37 +690,84 @@
                                                 {{ $t("Apply") }}
                                             </button>
                                         </div>
-                                    </div>
-                                </DialogPanel>
-                            </TransitionChild>
+                </aside>
+
+                <!-- Products -->
+                <div>
+                    <div
+                        class="grid grid-cols-1 gap-6 items-start xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4"
+                    >
+                        <div
+                            v-if="!isLoading"
+                            v-for="product in products"
+                            :key="product.id"
+                            class="w-full"
+                        >
+                            <ProductCardToggler :productData="product" />
+                        </div>
+
+                        <!-- loading -->
+                        <div v-else v-for="i in 12" :key="i">
+                            <SkeletonLoader
+                                class="w-full h-[220px] sm:h-[330px] rounded-lg"
+                            />
+                        </div>
+                    </div>
+                    <div
+                        v-if="products.length == 0 && !isLoading"
+                        class="flex justify-center items-center w-full mt-8"
+                    >
+                        <div
+                            class="text-slate-800 text-base font-normal leading-normal"
+                        >
+                            {{ $t("No products found") }}
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div
+                        v-if="products.length > 0 && !isLoading"
+                        class="flex justify-between items-center w-full mt-8 gap-4 flex-wrap"
+                    >
+                        <div
+                            class="text-slate-800 text-base font-normal leading-normal"
+                        >
+                            {{ $t("Showing") }} {{ perPage * (currentPage - 1) + 1 }} to
+                            {{ perPage * (currentPage - 1) + products.length }}
+                            {{ $t("of") }} {{ totalProducts }} {{ $t("results") }}
+                        </div>
+                        <div>
+                            <vue-awesome-paginate
+                                :total-items="totalProducts"
+                                :items-per-page="perPage"
+                                type="button"
+                                :max-pages-shown="5"
+                                v-model="currentPage"
+                                :hide-prev-next-when-ends="true"
+                                @click="onClickHandler"
+                            />
                         </div>
                     </div>
                 </div>
-            </Dialog>
-        </TransitionRoot>
+            </div>
+        </div>
+
+        <div v-if="bottomCategoryBanner" class="main-container pb-8">
+            <img
+                :src="bottomCategoryBanner.image"
+                loading="lazy"
+                class="w-full rounded-lg object-cover"
+            />
+        </div>
     </div>
 </template>
 
 <script setup>
-import {
-    Dialog,
-    DialogPanel,
-    TransitionChild,
-    TransitionRoot,
-} from "@headlessui/vue";
-import {
-    ArrowLeftIcon,
-    FunnelIcon,
-    XMarkIcon,
-} from "@heroicons/vue/24/outline";
-import { StarIcon } from "@heroicons/vue/24/solid";
-import { Swiper, SwiperSlide } from "swiper/vue";
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import ProductCardToggler from "../components/ProductCardToggler.vue";
-// Import Swiper styles
-import "swiper/css";
 import SkeletonLoader from "../components/SkeletonLoader.vue";
+import PartnerBrands from "../components/NovaStore/PartnerBrands.vue";
 
 import { useMaster } from "../stores/MasterStore";
 
@@ -933,6 +781,21 @@ const authStore = useAuth();
 const isLoading = ref(true);
 const master = useMaster();
 const route = useRoute();
+
+const topCategoryBanner = ref(null);
+const bottomCategoryBanner = ref(null);
+
+const fetchCategoryBanners = () => {
+    axios
+        .get(`/category/${route.params.slug}/banners`)
+        .then((response) => {
+            const categoryBanners = response.data.data.banners;
+            topCategoryBanner.value =
+                categoryBanners.find((banner) => banner.position === "top") ?? null;
+            bottomCategoryBanner.value =
+                categoryBanners.find((banner) => banner.position === "bottom") ?? null;
+        });
+};
 
 const priceRange = ref([0, 1000]);
 
@@ -956,6 +819,7 @@ onMounted(() => {
     fetchProducts();
     fetchSubCategories();
     fetchAttributes();
+    fetchCategoryBanners();
     window.scrollTo(0, 0);
 });
 
@@ -968,6 +832,7 @@ watch(
         fetchProducts();
         fetchSubCategories();
         fetchAttributes();
+        fetchCategoryBanners();
     }
 );
 
@@ -987,7 +852,6 @@ const onClickHandler = (page) => {
     fetchProducts();
 };
 
-const showFilterCanvas = ref(false);
 const currentExpandedFilter = ref("");
 
 const filterFormData = ref({
@@ -1019,8 +883,6 @@ const attributes = ref([]);
 const totalProducts = ref(0);
 const setRangeValue = ref(true);
 
-const hasFilter = ref(false);
-
 const toggleFilterExpansionSection = (section) => {
     if (currentExpandedFilter.value === section) {
         currentExpandedFilter.value = "";
@@ -1028,24 +890,6 @@ const toggleFilterExpansionSection = (section) => {
         currentExpandedFilter.value = section;
     }
 };
-
-watch(
-    filterFormData.value,
-    () => {
-        if (
-            filterFormData.value.rating ||
-            filterFormData.value.shortBy ||
-            filterFormData.value.brand ||
-            filterFormData.value.color ||
-            filterFormData.value.size
-        ) {
-            hasFilter.value = true;
-        } else {
-            hasFilter.value = false;
-        }
-    },
-    { deep: true }
-);
 
 const clearFilter = () => {
     filterFormData.value = {
@@ -1114,7 +958,6 @@ const applyFilter = () => {
     setRangeValue.value = false;
     master.search = null;
     currentPage.value = 1;
-    showFilterCanvas.value = false;
     fetchProducts();
 };
 
@@ -1167,10 +1010,6 @@ const filterSortBy = [
 </script>
 
 <style>
-.categorySwiper .swiper-slide {
-    width: auto !important;
-}
-
 input[type="range"]::-webkit-slider-runnable-track,
 input[type="range"]::-ms-track,
 input[type="range"]::-moz-range-track {

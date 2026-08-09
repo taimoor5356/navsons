@@ -53,6 +53,7 @@ const routes = [
         component: Home,
         meta: {
             layout: defaultLayout,
+            hideCategoryBar: true,
         },
     },
     {
@@ -71,6 +72,7 @@ const routes = [
         meta: {
             layout: defaultLayout,
             title: "Products",
+            hideCategoryBar: true,
         },
     },
     {
@@ -80,6 +82,7 @@ const routes = [
         meta: {
             layout: defaultLayout,
             title: "Categories",
+            hideCategoryBar: true,
         },
     },
     {
@@ -89,6 +92,7 @@ const routes = [
         meta: {
             layout: defaultLayout,
             title: "Most Popular Products",
+            hideCategoryBar: true,
         },
     },
     {
@@ -98,6 +102,7 @@ const routes = [
         meta: {
             layout: defaultLayout,
             title: "Best Deal Products",
+            hideCategoryBar: true,
         },
     },
     {
@@ -270,6 +275,7 @@ const routes = [
         meta: {
             layout: defaultLayout,
             title: "Terms & Conditions",
+            hideCategoryBar: true,
         },
     },
     {
@@ -279,6 +285,7 @@ const routes = [
         meta: {
             layout: defaultLayout,
             title: "Privacy Policy",
+            hideCategoryBar: true,
         },
     },
     {
@@ -288,6 +295,7 @@ const routes = [
         meta: {
             layout: defaultLayout,
             title: "About Us",
+            hideCategoryBar: true,
         },
     },
     {
@@ -297,6 +305,7 @@ const routes = [
         meta: {
             layout: defaultLayout,
             title: "Contact Us",
+            hideCategoryBar: true,
         },
     },
     {
@@ -306,6 +315,7 @@ const routes = [
         meta: {
             layout: defaultLayout,
             title: "Blogs",
+            hideCategoryBar: true,
         },
     },
     {

@@ -111,4 +111,9 @@ class Category extends Model
         return $this->hasMany(CategoryAttribute::class, 'category_id')->valid();
 
     }
+
+    public function banners(): HasMany
+    {
+        return $this->hasMany(CategoryBanner::class);
+    }
 }
