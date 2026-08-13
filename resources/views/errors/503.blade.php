@@ -38,7 +38,7 @@
                 <p class="title">Scheduled Maintenance</p>
                 <p class="description">The cache is refreshing now. That's why this website is undergoing maintenance.
                     It will be up within
-                    10 seconds automatically. If it's not up automatically, you can
+                    30 seconds automatically. If it's not up automatically, you can
 
                     <br>
                     <span>
@@ -58,6 +58,6 @@
 <script>
   setInterval(function() {
     location.reload();
-  }, 5000);
+  }, 30000);
 </script>
 </html>
