@@ -8,13 +8,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/css/error.css')}}">
+    <style>
+        .loader-img {
+            width: 260px;
+            height: 260px;
+            animation: flipHorizontal 1.5s linear infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes flipHorizontal {
+            0% {
+                transform: rotateY(0deg);
+            }
+
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+    </style>
 </head>
 
 <body>
     <main class="flex justify-center items-center">
         <section>
             <div class="image">
-                <img src="{{asset('assets/images/dino-503.svg')}}" alt="">
+                <img src="https://navsons.com/storage/files/1/2-Photoroom.png?timestamp=1778706157" class="loader-img" alt="">
             </div>
             <div class="details">
                 <p class="title">Scheduled Maintenance</p>
