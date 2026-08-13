@@ -32,7 +32,7 @@
     <main class="flex justify-center items-center">
         <section>
             <div class="image">
-                <img src="https://navsons.com/storage/files/1/2-Photoroom.png?timestamp=1778706157" class="loader-img" alt="">
+                <img src="{{ asset('assets/favicon.png') }}" class="loader-img" alt="">
             </div>
             <div class="details">
                 <p class="title">Scheduled Maintenance</p>
